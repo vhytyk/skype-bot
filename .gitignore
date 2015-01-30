@@ -7,5 +7,5 @@ Bin/
 obj/
 *.Publish.xml
 unity.config
-app.config
-App.config
+#app.config
+#App.config
