@@ -1,0 +1,11 @@
+*.user
+*.suo
+_ReSharper.*
+*.ReSharper
+bin/
+Bin/
+obj/
+*.Publish.xml
+unity.config
+app.config
+App.config

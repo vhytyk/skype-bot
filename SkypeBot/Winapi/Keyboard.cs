@@ -1,0 +1,185 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using SkypeBot.WindowsAPI;
+
+namespace SkypeBot.InputDevices
+{
+    //BUG: KeysConverter
+    /// <summary>
+    /// Represents Keyboard attachment to the machine.
+    /// </summary>
+    public class Keyboard 
+    {
+        private static readonly List<KeyboardInput.SpecialKeys> scanCodeDependent = new List<KeyboardInput.SpecialKeys>
+                                                                               {
+                                                                                   KeyboardInput.SpecialKeys.RIGHT_ALT,
+                                                                                   KeyboardInput.SpecialKeys.INSERT,
+                                                                                   KeyboardInput.SpecialKeys.DELETE,
+                                                                                   KeyboardInput.SpecialKeys.LEFT,
+                                                                                   KeyboardInput.SpecialKeys.HOME,
+                                                                                   KeyboardInput.SpecialKeys.END,
+                                                                                   KeyboardInput.SpecialKeys.UP,
+                                                                                   KeyboardInput.SpecialKeys.DOWN,
+                                                                                   KeyboardInput.SpecialKeys.PAGEUP,
+                                                                                   KeyboardInput.SpecialKeys.PAGEDOWN,
+                                                                                   KeyboardInput.SpecialKeys.RIGHT,
+                                                                                   KeyboardInput.SpecialKeys.LWIN,
+                                                                                   KeyboardInput.SpecialKeys.RWIN
+                                                                               };
+
+        [DllImport("user32", EntryPoint = "SendInput")]
+        private static extern int SendInput(uint numberOfInputs, ref Input input, int structSize);
+
+        [DllImport("user32", EntryPoint = "SendInput")]
+        private static extern int SendInput64(int numberOfInputs, ref Input64 input, int structSize);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetMessageExtraInfo();
+
+        [DllImport("user32.dll")]
+        private static extern short VkKeyScan(char ch);
+
+        [DllImport("user32.dll")]
+        private static extern ushort GetKeyState(uint virtKey);
+
+        private readonly List<KeyboardInput.SpecialKeys> heldKeys = new List<KeyboardInput.SpecialKeys>();
+
+        /// <summary>
+        /// Use Window.Keyboard method to get handle to the Keyboard. Keyboard instance got using this method would not wait while the application
+        /// is busy.
+        /// </summary>
+        public static readonly Keyboard Instance = new Keyboard();
+
+        private readonly List<int> keysHeld = new List<int>();
+
+        private Keyboard()
+        {
+        }
+
+        public virtual void Send(string keysToType)
+        {
+            if (heldKeys.Count > 0) keysToType = keysToType.ToLower();
+
+            CapsLockOn = false;
+            foreach (char c in keysToType)
+            {
+                short key = VkKeyScan(c);
+                if (c.Equals('\r')) continue;
+
+                if (ShiftKeyIsNeeded(key)) SendKeyDown((short)KeyboardInput.SpecialKeys.SHIFT, false);
+                if (CtrlKeyIsNeeded(key)) SendKeyDown((short)KeyboardInput.SpecialKeys.CONTROL, false);
+                if (AltKeyIsNeeded(key)) SendKeyDown((short)KeyboardInput.SpecialKeys.ALT, false);
+                Press(key, false);
+                if (ShiftKeyIsNeeded(key)) SendKeyUp((short)KeyboardInput.SpecialKeys.SHIFT, false);
+                if (CtrlKeyIsNeeded(key)) SendKeyUp((short)KeyboardInput.SpecialKeys.CONTROL, false);
+                if (AltKeyIsNeeded(key)) SendKeyUp((short)KeyboardInput.SpecialKeys.ALT, false);
+            }
+
+        }
+
+      public virtual void PressSpecialKey(KeyboardInput.SpecialKeys key)
+        {
+            Send(key, true);
+        }
+
+
+        internal virtual void HoldKey(KeyboardInput.SpecialKeys key)
+        {
+            SendKeyDown((short)key, true);
+            heldKeys.Add(key);
+       
+        }
+
+
+        public virtual void LeaveKey(KeyboardInput.SpecialKeys key)
+        {
+            SendKeyUp((short)key, true);
+            heldKeys.Remove(key);
+
+        }
+
+        private void Press(short key, bool specialKey)
+        {
+            SendKeyDown(key, specialKey);
+            SendKeyUp(key, specialKey);
+        }
+
+        private void Send(KeyboardInput.SpecialKeys key, bool specialKey)
+        {
+            Press((short)key, specialKey);
+        }
+
+        private static bool ShiftKeyIsNeeded(short key)
+        {
+            return ((key >> 8) & 1) == 1;
+        }
+
+        private static bool CtrlKeyIsNeeded(short key)
+        {
+            return ((key >> 8) & 2) == 2;
+        }
+
+        private static bool AltKeyIsNeeded(short key)
+        {
+            return ((key >> 8) & 4) == 4;
+        }
+
+        private void SendKeyUp(short b, bool specialKey)
+        {
+            keysHeld.Remove(b);
+            KeyboardInput.KeyUpDown keyUpDown = GetSpecialKeyCode(specialKey, KeyboardInput.KeyUpDown.KEYEVENTF_KEYUP);
+            SendInput(GetInputFor(b, keyUpDown));
+        }
+
+        private static KeyboardInput.KeyUpDown GetSpecialKeyCode(bool specialKey, KeyboardInput.KeyUpDown key)
+        {
+            if (specialKey && scanCodeDependent.Contains((KeyboardInput.SpecialKeys)key)) key |= KeyboardInput.KeyUpDown.KEYEVENTF_EXTENDEDKEY;
+            return key;
+        }
+
+        private void SendKeyDown(short b, bool specialKey)
+        {
+            keysHeld.Add(b);
+            KeyboardInput.KeyUpDown keyUpDown = GetSpecialKeyCode(specialKey, KeyboardInput.KeyUpDown.KEYEVENTF_KEYDOWN);
+            SendInput(GetInputFor(b, keyUpDown));
+        }
+
+        private static void SendInput(Input input)
+        {
+            // Added check for 32/64 bit  
+            if (IntPtr.Size == 4)
+                SendInput(1, ref input, Marshal.SizeOf(typeof(Input)));
+            else
+            {
+                var input64 = new Input64(input);
+                SendInput64(1, ref input64, Marshal.SizeOf(typeof(Input)));
+            }
+        }
+
+        private static Input GetInputFor(short character, KeyboardInput.KeyUpDown keyUpOrDown)
+        {
+            return InputFactory.Keyboard(new KeyboardInput(character, keyUpOrDown, GetMessageExtraInfo()));
+        }
+
+        public virtual bool CapsLockOn
+        {
+            get
+            {
+                ushort state = GetKeyState((uint)KeyboardInput.SpecialKeys.CAPS);
+                return state != 0;
+            }
+            set { if (CapsLockOn != value) Send(KeyboardInput.SpecialKeys.CAPS, true); }
+        }
+
+        public virtual KeyboardInput.SpecialKeys[] HeldKeys
+        {
+            get { return heldKeys.ToArray(); }
+        }
+
+        public virtual void LeaveAllKeys()
+        {
+            new List<KeyboardInput.SpecialKeys>(heldKeys).ForEach(LeaveKey);
+        }
+    }
+}
