@@ -30,7 +30,7 @@ namespace SkypeBot.BotEngine.EngineImplementations
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error: " + ex.Message +
+                Debug.WriteLine("Error: " + ex.ToString() +
                                 (ex.InnerException != null ? "; " + ex.InnerException.Message : ""));
             }
         }

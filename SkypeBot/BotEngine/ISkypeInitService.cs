@@ -10,5 +10,6 @@ namespace SkypeBot.BotEngine
     {
         void Initialize(Action afterInitAction = null);
         AutomationElement GetMainWindow();
+        int X { get; set; }
     }
 }

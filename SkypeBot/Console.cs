@@ -9,29 +9,39 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SkypeBot.BotEngine;
+using SkypeBot.BotEngine.EngineImplementations._7._0;
 
 namespace SkypeBot
 {
     public partial class Console : Form
     {
-        IBotCoreService _botCoreService = new BotCoreService(new SkypeInitService70(), new SkypeSendMessageService70(new SkypeInitService70()));
+        IBotCoreService _botCoreService = UnityConfiguration.Instance.Reslove<IBotCoreService>();
         public Console()
         {
             InitializeComponent();
-            System.Console.SetOut(new StreamWriter("blabla.log"));
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
             Debug.Listeners.Add(new ConsoleListener(message =>
             {
                 Invoke(new MethodInvoker(() =>
                 {
-                    outputBox.Text += message;
-                    outputBox.SelectionStart = outputBox.Text.Length - 1;
+                    outputBox.Text = message + outputBox.Text;
+                    outputBox.SelectionStart = 0;
                 }));
             }));
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            _botCoreService.SendMessage("viktoriia532", "hello world!");
+            _botCoreService.InitSkype();
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

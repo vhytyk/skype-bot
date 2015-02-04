@@ -26,9 +26,10 @@ namespace SkypeBot.BotEngine
             {
                 Debug.WriteLine("searching for contact: " + contact);
                 Mouse.Instance.Click(_initService.GetMainWindow().FindFirst(TreeScope.Descendants,
-                    new PropertyCondition(AutomationElement.NameProperty, "Search")).GetClickablePoint());
+                    new PropertyCondition(AutomationElement.ClassNameProperty, "TSearchControl")).GetClickablePoint());
                 SelectAllAndRemove();
                 Keyboard.Instance.Send(contact);
+                
                 Mouse.Instance.Click(_initService.GetMainWindow().GetElementByName("Contacts")
                     .FindFirst(TreeScope.Children, Condition.TrueCondition).GetClickablePoint());
                 Debug.WriteLine("sending message to contact: " + contact);
