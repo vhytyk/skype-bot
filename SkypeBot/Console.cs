@@ -34,6 +34,12 @@ namespace SkypeBot
             }));
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            _botCoreService.Dispose();
+        }
+
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             _botCoreService.InitSkype();
@@ -41,7 +47,7 @@ namespace SkypeBot
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            
+            new WindowTree(UnityConfiguration.Instance.Reslove<ISkypeInitService>().GetMainWindow()).ShowDialog();
         }
     }
 }

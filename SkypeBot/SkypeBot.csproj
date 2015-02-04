@@ -91,6 +91,12 @@
     <Compile Include="Winapi\SystemMetric.cs" />
     <Compile Include="Winapi\WinApi.cs" />
     <Compile Include="Winapi\WindowsConstants.cs" />
+    <Compile Include="WindowTree.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowTree.Designer.cs">
+      <DependentUpon>WindowTree.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Console.resx">
       <DependentUpon>Console.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,6 +109,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="WindowTree.resx">
+      <DependentUpon>WindowTree.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config_" />
     <None Include="App.config" />
     <None Include="packages.config" />

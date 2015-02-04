@@ -29,25 +29,25 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
         }
 
         private Skype skype = null;
+
         public void Initialize()
         {
-            _initService.Initialize(() =>
+
+            skype = new Skype();
+
+            skype.Attach(Wait: false);
+            Thread.Sleep(5000);
+
+            var allowAccessButton = _initService.GetMainWindow()
+                .FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.NameProperty, "Allow access"));
+            if (allowAccessButton != null)
             {
-                skype = new Skype();
+                (allowAccessButton.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern).Invoke();
+                Debug.WriteLine("Allowing access to our app");
+            }
 
-                skype.Attach(Wait: false);
-                Thread.Sleep(5000);
+            skype.MessageStatus += skype_MessageStatus;
 
-                var allowAccessButton = _initService.GetMainWindow()
-                    .FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.NameProperty, "Allow access"));
-                if (allowAccessButton != null)
-                {
-                    (allowAccessButton.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern).Invoke();
-                    Debug.WriteLine("Allowing access to our app");
-                }
-                
-                skype.MessageStatus += skype_MessageStatus;
-            });
 
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Automation;
@@ -31,6 +32,12 @@ namespace SkypeBot.BotEngine
         public static AutomationElement GetElementByName(this AutomationElement element, string name)
         {
             return element.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.NameProperty, name));
+        }
+
+        public static void LogPatterns(this AutomationElement element)
+        {
+            AutomationPattern[] patterns = element.GetSupportedPatterns();
+            Debug.WriteLine(string.Join(",", patterns.Select(p => p.ProgrammaticName)));
         }
     }
 }

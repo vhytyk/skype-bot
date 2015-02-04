@@ -31,10 +31,12 @@ namespace SkypeBot.BotEngine
 
         public void InitSkype()
         {
-            _initService.Initialize();
-            _skypeListener.Initialize();
-            _skypeListener.SkypeMessageReceived += _skypeListener_SkypeMessageReceived;
-            _processTimer = new Timer(ProcessQueue, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+            _initService.Initialize(() =>
+            {
+                _skypeListener.Initialize();
+                _skypeListener.SkypeMessageReceived += _skypeListener_SkypeMessageReceived;
+                _processTimer = new Timer(ProcessQueue, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+            });
         }
 
         private void ProcessQueue(object state)
@@ -54,13 +56,17 @@ namespace SkypeBot.BotEngine
         void _skypeListener_SkypeMessageReceived(string source, string message)
         {
             Debug.WriteLine("Message received from {0}: {1}", source, message);
-            string contact =
-                Regex.Matches(source, @"[#\$]([\w.]+)[/;]")
-                    .Cast<Match>()
-                    .FirstOrDefault(m => !m.Groups[1].Value.Contains(ConfigurationManager.AppSettings["botSkypeName"]))
-                    .Groups[1].Value;
-            string response = _chatterBot.Think(message);
-            SendMessage(contact, response);
+            var contactMatches = Regex.Matches(source, @"[#\$]([\w.]+)[/;]")
+                .Cast<Match>()
+                .FirstOrDefault(m => !m.Groups[1].Value.Contains(ConfigurationManager.AppSettings["botSkypeName"]));
+            if (contactMatches != null)
+            {
+                string contact =
+                    contactMatches
+                        .Groups[1].Value;
+                string response = _chatterBot.Think(message);
+                SendMessage(contact, response);
+            }
         }
 
         public void SendMessage(string contact, string message)
