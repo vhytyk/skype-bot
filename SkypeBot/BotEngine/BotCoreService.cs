@@ -26,7 +26,7 @@ namespace SkypeBot.BotEngine
             _skypeListener = skypeListener;
             ChatterBotFactory factory = new ChatterBotFactory();
 
-            _chatterBot = factory.Create(ChatterBotType.CLEVERBOT).CreateSession();
+            _chatterBot = factory.Create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477").CreateSession();
         }
 
         public void InitSkype()

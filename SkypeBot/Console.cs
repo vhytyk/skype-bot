@@ -29,6 +29,10 @@ namespace SkypeBot
                 Invoke(new MethodInvoker(() =>
                 {
                     outputBox.Text = message + outputBox.Text;
+                    if (outputBox.Text.Length > 1000)
+                    {
+                        outputBox.Text = outputBox.Text.Substring(0, 500);
+                    }
                     outputBox.SelectionStart = 0;
                 }));
             }));
