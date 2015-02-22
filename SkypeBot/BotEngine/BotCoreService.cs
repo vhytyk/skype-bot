@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Automation;
 using ChatterBotAPI;
+using SkypeBot.BotEngine.EngineImplementations._7._0;
 
 namespace SkypeBot.BotEngine
 {
@@ -53,20 +54,20 @@ namespace SkypeBot.BotEngine
             }
         }
 
-        void _skypeListener_SkypeMessageReceived(string source, string message)
+        private void _skypeListener_SkypeMessageReceived(string source, string message)
         {
             Debug.WriteLine("Message received from {0}: {1}", source, message);
-            var contactMatches = Regex.Matches(source, @"[#\$]([\w.]+)[/;]")
-                .Cast<Match>()
-                .FirstOrDefault(m => !m.Groups[1].Value.Contains(ConfigurationManager.AppSettings["botSkypeName"]));
-            if (contactMatches != null)
-            {
-                string contact =
-                    contactMatches
-                        .Groups[1].Value;
-                string response = _chatterBot.Think(message);
-                SendMessage(contact, response);
-            }
+            //var contactMatches = Regex.Matches(source, @"[#\$]([\w.-]+)[/;]")
+            //    .Cast<Match>()
+            //    .FirstOrDefault(m => !m.Groups[1].Value.Contains(ConfigurationManager.AppSettings["botSkypeName"]));
+            //if (contactMatches != null)
+            //{
+            //    string contact =
+            //        contactMatches
+            //            .Groups[1].Value;
+            string response = _chatterBot.Think(message);
+            SendMessage(source, response);
+            //}
         }
 
         public void SendMessage(string contact, string message)

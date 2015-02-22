@@ -25,7 +25,7 @@ namespace SkypeBot.BotEngine
                 {
                     string userName = ConfigurationManager.AppSettings["botSkypeName"];
                     string password = ConfigurationManager.AppSettings["botSkypePassword"];
-                    
+
                     cachedMainWindow =
                         AutomationElement.RootElement.FindAll(TreeScope.Children, Condition.TrueCondition)
                             .Cast<AutomationElement>()
@@ -64,9 +64,7 @@ namespace SkypeBot.BotEngine
                         }
                     }).Wait(TimeSpan.FromSeconds(10));
 
-                    (GetMainWindow().GetCurrentPattern(WindowPattern.Pattern) as WindowPattern).SetWindowVisualState
-                        (
-                            WindowVisualState.Normal);
+                    (GetMainWindow().GetCurrentPattern(WindowPattern.Pattern) as WindowPattern).SetWindowVisualState(WindowVisualState.Normal);
 
                     Debug.WriteLine("skype is ready");
                     if (afterInitAction != null)

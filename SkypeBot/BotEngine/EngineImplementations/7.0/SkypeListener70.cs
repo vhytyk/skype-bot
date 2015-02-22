@@ -1,23 +1,19 @@
-﻿using SKYPE4COMLib;
-using System;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Windows.Automation;
+using SkypeCore;
 
 namespace SkypeBot.BotEngine.EngineImplementations._7._0
 {
-    public class SkypeListener70 : ISkypeListener
+    public class SkypeListener70 : ISkypeListener, IDisposable
     {
-        private readonly ISkypeInitService _initService;
-
-        public SkypeListener70(ISkypeInitService initService)
-        {
-            _initService = initService;
-        }
-
+        private IDictionary<string, long> _lastMessageIds = new ConcurrentDictionary<string, long>();
+        private Timer _readTimer = null;
+        private SkypeDAL _skypeDal = null;
         public event SkypeMessageHandler SkypeMessageReceived;
 
         private void OnSkypeMessageReceived(string source, string message)
@@ -27,35 +23,46 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                 SkypeMessageReceived(source, message);
             }
         }
-
-        private Skype skype = null;
+        private object _locker = new object();
+        private void ScanConversations(bool raiseEvents = true)
+        {
+            lock (_locker)
+            {
+                _skypeDal.GetAllConversations().ForEach(conversation =>
+                {
+                    long lastMessageId = _lastMessageIds.ContainsKey(conversation.Name)
+                        ? _lastMessageIds[conversation.Name]
+                        : -1;
+                    _skypeDal.GetLastMessages(lastMessageId, conversation.Id).ForEach(message =>
+                    {
+                        if (raiseEvents && message.Author != ConfigurationManager.AppSettings["botSkypeName"])
+                        {
+                            OnSkypeMessageReceived(conversation.DisplayName, message.Message);
+                        }
+                        _lastMessageIds[conversation.Name] = message.Id;
+                    });
+                });
+            }
+        }
 
         public void Initialize()
         {
-
-            skype = new Skype();
-
-            skype.Attach(Wait: false);
-            Thread.Sleep(5000);
-
-            var allowAccessButton = _initService.GetMainWindow()
-                .FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.NameProperty, "Allow access"));
-            if (allowAccessButton != null)
-            {
-                (allowAccessButton.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern).Invoke();
-                Debug.WriteLine("Allowing access to our app");
-            }
-
-            skype.MessageStatus += skype_MessageStatus;
-
-
+            _skypeDal = new SkypeDAL(ConfigurationManager.AppSettings["botSkypeName"]);
+            ScanConversations(false);
+            _readTimer = new Timer(Scan, null, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(2));
         }
 
-        void skype_MessageStatus(ChatMessage pMessage, TChatMessageStatus Status)
+        private void Scan(object state)
         {
-            if (Status == TChatMessageStatus.cmsReceived)
+            ScanConversations();
+        }
+
+        public void Dispose()
+        {
+            if (_readTimer != null)
             {
-                OnSkypeMessageReceived(pMessage.ChatName, pMessage.Body);
+                _readTimer.Dispose();
+                _readTimer = null;
             }
         }
     }
