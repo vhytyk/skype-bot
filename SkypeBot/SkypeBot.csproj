@@ -69,9 +69,11 @@
     <Compile Include="BotEngine\HandleMessageService.cs" />
     <Compile Include="BotEngine\IBotCoreService.cs" />
     <Compile Include="BotEngine\IHandleMessageService.cs" />
+    <Compile Include="BotEngine\IRmqListener.cs" />
     <Compile Include="BotEngine\ISkypeInitService.cs" />
     <Compile Include="BotEngine\ISkypeListener.cs" />
     <Compile Include="BotEngine\ISkypeSendMessageService.cs" />
+    <Compile Include="BotEngine\RmqListener.cs" />
     <Compile Include="Console.cs">
       <SubType>Form</SubType>
     </Compile>
