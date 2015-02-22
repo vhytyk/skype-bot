@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 using SkypeBot.BotEngine;
 using SkypeBot.BotEngine.EngineImplementations._7._0;
+using SkypeBotRMQ;
 
 namespace SkypeBot
 {
@@ -52,7 +53,11 @@ namespace SkypeBot
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            
+            var service = new RmqSkypeService();
+            service.PushMessage(new RmqSkypeMessage(){Conversation = "test", Message = "lalala"});
+            RmqSkypeMessage message = service.PullMessage();
+            Debug.WriteLine(message.Conversation);
+            Debug.WriteLine(message.Message);
             //new WindowTree(UnityConfiguration.Instance.Reslove<ISkypeInitService>().GetMainWindow()).ShowDialog();
         }
     }

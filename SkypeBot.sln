@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkypeBot", "SkypeBot\SkypeBot.csproj", "{1535B045-8698-45AC-B888-F390996D2DEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkypeBotWebApi", "SkypeBotWebApi\SkypeBotWebApi.csproj", "{EB75B80C-A00A-4847-B627-6C4E2E354327}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkypeBotRMQ", "SkypeBotRMQ\SkypeBotRMQ.csproj", "{598E6FA5-4D4D-418F-A3E2-4348F5A31BC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{1535B045-8698-45AC-B888-F390996D2DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1535B045-8698-45AC-B888-F390996D2DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1535B045-8698-45AC-B888-F390996D2DEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB75B80C-A00A-4847-B627-6C4E2E354327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB75B80C-A00A-4847-B627-6C4E2E354327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB75B80C-A00A-4847-B627-6C4E2E354327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB75B80C-A00A-4847-B627-6C4E2E354327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{598E6FA5-4D4D-418F-A3E2-4348F5A31BC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{598E6FA5-4D4D-418F-A3E2-4348F5A31BC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{598E6FA5-4D4D-418F-A3E2-4348F5A31BC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{598E6FA5-4D4D-418F-A3E2-4348F5A31BC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
