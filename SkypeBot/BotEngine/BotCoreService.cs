@@ -33,7 +33,7 @@ namespace SkypeBot.BotEngine
 
         private void ProcessQueue(object state)
         {
-            lock (locker)
+            lock (_locker)
             {
                 if (_skypeMessages.Count == 0)
                 {
@@ -52,16 +52,16 @@ namespace SkypeBot.BotEngine
 
         public void SendMessage(string contact, string message)
         {
-            AddMessageToQueue(new SkypeMessage()
+            AddMessageToQueue(new SkypeMessage
             {
                 Contact = contact,
                 Message = message
             });
         }
-        private object locker = new object();
+        private readonly object _locker = new object();
         void AddMessageToQueue(SkypeMessage message)
         {
-            lock (locker)
+            lock (_locker)
             {
                 _skypeMessages.Enqueue(message);
             }

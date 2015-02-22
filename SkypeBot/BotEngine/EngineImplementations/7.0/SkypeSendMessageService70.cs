@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Automation;
-using SkypeBot.BotEngine.EngineImplementations;
 using SkypeBot.InputDevices;
 using SkypeBot.WindowsAPI;
-using System.Windows;
 
-namespace SkypeBot.BotEngine
+namespace SkypeBot.BotEngine.EngineImplementations._7._0
 {
     public class SkypeSendMessageService70: SkypeBaseService, ISkypeSendMessageService
     {

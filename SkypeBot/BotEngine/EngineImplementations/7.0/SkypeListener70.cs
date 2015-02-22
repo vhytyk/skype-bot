@@ -2,18 +2,15 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using SkypeBot.SkypeDB;
-using SkypeCore;
 
 namespace SkypeBot.BotEngine.EngineImplementations._7._0
 {
     public class SkypeListener70 : ISkypeListener, IDisposable
     {
-        private IDictionary<string, long> _lastMessageIds = new ConcurrentDictionary<string, long>();
-        private Timer _readTimer = null;
+        private readonly IDictionary<string, long> _lastMessageIds = new ConcurrentDictionary<string, long>();
+        private Timer _readTimer;
         public event SkypeMessageHandler SkypeMessageReceived;
 
         private void OnSkypeMessageReceived(string source, string message)
@@ -23,7 +20,7 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                 SkypeMessageReceived(source, message);
             }
         }
-        private object _locker = new object();
+        private readonly object _locker = new object();
 
         private void ScanConversations(bool raiseEvents = true)
         {

@@ -1,45 +1,42 @@
-﻿using SkypeBot.BotEngine.EngineImplementations;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
 
-namespace SkypeBot.BotEngine
+namespace SkypeBot.BotEngine.EngineImplementations._7._0
 {
     public class SkypeInitService70 : SkypeBaseService, ISkypeInitService
     {
         public int X { get; set; }
 
-        private Application application = null;
-        private object lockObject = new object();
+        private Application _application;
+        private readonly object _lockObject = new object();
 
         public void Initialize(Action afterInitAction = null)
         {
             Process(() =>
             {
-                lock (lockObject)
+                lock (_lockObject)
                 {
                     string userName = ConfigurationManager.AppSettings["botSkypeName"];
                     string password = ConfigurationManager.AppSettings["botSkypePassword"];
 
-                    cachedMainWindow =
+                    _cachedMainWindow =
                         AutomationElement.RootElement.FindAll(TreeScope.Children, Condition.TrueCondition)
                             .Cast<AutomationElement>()
                             .FirstOrDefault(el => el.Current.Name.Contains(userName));
 
-                    if (cachedMainWindow != null)
+                    if (_cachedMainWindow != null)
                     {
                         Debug.WriteLine("attaching to skype");
-                        application = Application.Attach(cachedMainWindow.Current.ProcessId);
+                        _application = Application.Attach(_cachedMainWindow.Current.ProcessId);
                     }
                     else
                     {
                         Debug.WriteLine("running skype");
-                        application = Application.Launch(
+                        _application = Application.Launch(
                             new ProcessStartInfo
                             {
                                 FileName = @"C:\Program Files (x86)\Skype\Phone\Skype.exe",
@@ -64,7 +61,9 @@ namespace SkypeBot.BotEngine
                         }
                     }).Wait(TimeSpan.FromSeconds(10));
 
-                    (GetMainWindow().GetCurrentPattern(WindowPattern.Pattern) as WindowPattern).SetWindowVisualState(WindowVisualState.Normal);
+                    var windowPattern = GetMainWindow().GetCurrentPattern(WindowPattern.Pattern) as WindowPattern;
+                    if (windowPattern != null)
+                        windowPattern.SetWindowVisualState(WindowVisualState.Normal);
 
                     Debug.WriteLine("skype is ready");
                     if (afterInitAction != null)
@@ -81,7 +80,9 @@ namespace SkypeBot.BotEngine
         private void LogIn(string username, string password)
         {
             AutomationElement mainWindow = GetMainLoginWindow();
-            (mainWindow.GetCurrentPattern(WindowPattern.Pattern) as WindowPattern).SetWindowVisualState(WindowVisualState.Normal);
+            var windowPattern = mainWindow.GetCurrentPattern(WindowPattern.Pattern) as WindowPattern;
+            if (windowPattern != null)
+                windowPattern.SetWindowVisualState(WindowVisualState.Normal);
             Debug.Write(string.Format("loggin in, username: {0}...", username));
 
             mainWindow.SetValue(ControlType.ComboBox, "Skype Name", username);
@@ -94,24 +95,24 @@ namespace SkypeBot.BotEngine
 
         internal AutomationElement GetMainLoginWindow()
         {
-            AndCondition andcondition = new AndCondition(new PropertyCondition(AutomationElement.ProcessIdProperty, application.Process.Id),
+            var andcondition = new AndCondition(new PropertyCondition(AutomationElement.ProcessIdProperty, _application.Process.Id),
                 new PropertyCondition(AutomationElement.ClassNameProperty, "TLoginForm"));
             return AutomationElement.RootElement.FindFirst(TreeScope.Descendants, andcondition);
         }
 
 
 
-        private AutomationElement cachedMainWindow;
+        private AutomationElement _cachedMainWindow;
         public AutomationElement GetMainWindow()
         {
-            if (cachedMainWindow != null)
+            if (_cachedMainWindow != null)
             {
-                return cachedMainWindow;
+                return _cachedMainWindow;
             }
-            AndCondition andcondition = new AndCondition(new PropertyCondition(AutomationElement.ProcessIdProperty, application.Process.Id),
+            var andcondition = new AndCondition(new PropertyCondition(AutomationElement.ProcessIdProperty, _application.Process.Id),
                 new PropertyCondition(AutomationElement.ClassNameProperty, "tSkMainForm"));
-            cachedMainWindow = AutomationElement.RootElement.FindFirst(TreeScope.Descendants, andcondition);
-            return cachedMainWindow;
+            _cachedMainWindow = AutomationElement.RootElement.FindFirst(TreeScope.Descendants, andcondition);
+            return _cachedMainWindow;
         }
     }
 }

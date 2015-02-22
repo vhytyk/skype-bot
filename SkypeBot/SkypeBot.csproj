@@ -84,7 +84,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkypeDB\Entities.cs" />
     <Compile Include="SkypeDB\ISkypeDal.cs" />
-    <Compile Include="SkypeDB\SerializableDictionary.cs" />
     <Compile Include="SkypeDB\SkypeDalImplementations\SkypeDal_7.cs" />
     <Compile Include="SkypeDB\SQLite.cs" />
     <Compile Include="SkypeDB\SQLiteAsync.cs" />

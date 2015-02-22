@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using SkypeCore;
 using SQLite;
 
 namespace SkypeBot.SkypeDB.SkypeDalImplementations
 {
-    public class SkypeDal_7: ISkypeDal
+    public class SkypeDal7: ISkypeDal
     {
         private string _dbCopyFilePath;
 
@@ -41,7 +39,7 @@ namespace SkypeBot.SkypeDB.SkypeDalImplementations
             }
         }
         #endregion
-        public SkypeDal_7()
+        public SkypeDal7()
         {
             CopyTempDb(ConfigurationManager.AppSettings["botSkypeName"]);
         }

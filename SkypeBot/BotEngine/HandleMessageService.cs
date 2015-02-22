@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using ChatterBotAPI;
 
 namespace SkypeBot.BotEngine
 {
     public class HandleMessageService : IHandleMessageService
     {
-        private ChatterBotSession _chatterBot = null;
+        private readonly ChatterBotSession _chatterBot;
 
         public HandleMessageService()
         {

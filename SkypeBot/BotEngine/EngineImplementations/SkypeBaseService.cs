@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using SkypeBot.InputDevices;
 using SkypeBot.WindowsAPI;
@@ -13,10 +10,7 @@ namespace SkypeBot.BotEngine.EngineImplementations
     {
         protected void Process(Action invokeAction)
         {
-            new Thread(() =>
-            {
-                ProcessInThread(invokeAction);
-            }).Start();
+            new Thread(() => ProcessInThread(invokeAction)).Start();
         }
 
         protected void ProcessInThread(Action invokeAction)
@@ -30,7 +24,7 @@ namespace SkypeBot.BotEngine.EngineImplementations
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error: " + ex.ToString() +
+                Debug.WriteLine("Error: " + ex +
                                 (ex.InnerException != null ? "; " + ex.InnerException.Message : ""));
             }
         }

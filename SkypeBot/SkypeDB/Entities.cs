@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SQLite;
 
-namespace SkypeCore
+namespace SkypeBot.SkypeDB
 {
     public class SkypeContact
     {

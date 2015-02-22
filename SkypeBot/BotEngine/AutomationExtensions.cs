@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows.Automation;
 
 namespace SkypeBot.BotEngine
@@ -14,9 +11,12 @@ namespace SkypeBot.BotEngine
             AutomationElement element =
                 window.FindAll(TreeScope.Descendants, Condition.TrueCondition)
                     .Cast<AutomationElement>()
-                    .FirstOrDefault(el => el.Current.ControlType == ControlType.Button && el.Current.Name == name);
-            InvokePattern pattern = element.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
-            pattern.Invoke();
+                    .FirstOrDefault(el => Equals(el.Current.ControlType, ControlType.Button) && el.Current.Name == name);
+            if (element != null)
+            {
+                var pattern = element.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+                if (pattern != null) pattern.Invoke();
+            }
         }
 
         public static void SetValue(this AutomationElement window, ControlType type, string name, string value)
@@ -24,9 +24,12 @@ namespace SkypeBot.BotEngine
             AutomationElement element =
                 window.FindAll(TreeScope.Descendants, Condition.TrueCondition)
                     .Cast<AutomationElement>()
-                    .FirstOrDefault(el => el.Current.ControlType == type && el.Current.Name == name);
-            ValuePattern pattern = element.GetCurrentPattern(ValuePattern.Pattern) as ValuePattern;
-            pattern.SetValue(value);
+                    .FirstOrDefault(el => Equals(el.Current.ControlType, type) && el.Current.Name == name);
+            if (element != null)
+            {
+                var pattern = element.GetCurrentPattern(ValuePattern.Pattern) as ValuePattern;
+                if (pattern != null) pattern.SetValue(value);
+            }
         }
 
         public static AutomationElement GetElementByName(this AutomationElement element, string name)
