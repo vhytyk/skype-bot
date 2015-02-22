@@ -83,7 +83,7 @@ namespace SkypeBot.SkypeDB.SkypeDalImplementations
         public List<SkypeMessage> GetLastMessages(long lastMessageId, long conversationId)
         {
             return
-                GetList<SkypeMessage>(string.Format("select * from messages where convo_id={0} and id>{1}",
+                GetList<SkypeMessage>(string.Format("select * from messages where convo_id={0} and id>{1} order by id",
                     conversationId, lastMessageId));
         }
 

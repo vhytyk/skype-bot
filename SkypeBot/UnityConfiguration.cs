@@ -35,6 +35,7 @@ namespace SkypeBot
             _container.RegisterType<ISkypeInitService, SkypeInitService70>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISkypeSendMessageService, SkypeSendMessageService70>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISkypeListener, SkypeListener70>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IRmqListener, RmqListener>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IHandleMessageService, HandleMessageService>(new ContainerControlledLifetimeManager());
 
             _container.RegisterType<ISkypeDal, SkypeDal7>(new PerResolveLifetimeManager());

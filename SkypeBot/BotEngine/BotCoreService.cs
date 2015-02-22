@@ -9,26 +9,35 @@ namespace SkypeBot.BotEngine
         private readonly ISkypeInitService _initService;
         private readonly ISkypeSendMessageService _sendMessageService;
         private readonly ISkypeListener _skypeListener;
+        private readonly IRmqListener _rmqListener;
         private readonly IHandleMessageService _handeMessageService;
         private readonly Queue<SkypeMessage> _skypeMessages = new Queue<SkypeMessage>();
         private Timer _processTimer;
         
-        public BotCoreService(ISkypeInitService initService, ISkypeSendMessageService sendMessageService, ISkypeListener skypeListener, IHandleMessageService handeMessageService)
+        public BotCoreService(ISkypeInitService initService, ISkypeSendMessageService sendMessageService, ISkypeListener skypeListener, IHandleMessageService handeMessageService, IRmqListener rmqListener)
         {
             _initService = initService;
             _sendMessageService = sendMessageService;
             _skypeListener = skypeListener;
             _handeMessageService = handeMessageService;
+            _rmqListener = rmqListener;
         }
 
         public void InitSkype()
         {
             _initService.Initialize(() =>
             {
+                _rmqListener.Initialize();
                 _skypeListener.Initialize();
+                _rmqListener.SkypeMessageReceived += _rmqListener_SkypeMessageReceived;
                 _skypeListener.SkypeMessageReceived += _skypeListener_SkypeMessageReceived;
                 _processTimer = new Timer(ProcessQueue, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
             });
+        }
+
+        void _rmqListener_SkypeMessageReceived(string source, string message)
+        {
+            SendMessage(source, message);
         }
 
         private void ProcessQueue(object state)
