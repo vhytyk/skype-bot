@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Practices.Unity;
 using SkypeBot.BotEngine;
 using SkypeBot.BotEngine.EngineImplementations._7._0;
+using SkypeBot.SkypeDB;
+using SkypeBot.SkypeDB.SkypeDalImplementations;
 
 namespace SkypeBot
 {
@@ -32,6 +34,7 @@ namespace SkypeBot
             _container.RegisterType<ISkypeInitService, SkypeInitService70>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISkypeSendMessageService, SkypeSendMessageService70>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISkypeListener, SkypeListener70>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<ISkypeDal, SkypeDal_7>(new PerResolveLifetimeManager());
         }
 
         public T Reslove<T>()

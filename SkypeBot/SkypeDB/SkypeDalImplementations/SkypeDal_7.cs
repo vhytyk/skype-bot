@@ -1,32 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
+using SkypeCore;
 using SQLite;
-using System.Configuration;
 
-namespace SkypeCore
+namespace SkypeBot.SkypeDB.SkypeDalImplementations
 {
-    public class SkypeDAL
+    public class SkypeDal_7: ISkypeDal
     {
-        public string AccountName { get; set; }
-
-        public SkypeDAL(string accountName)
-        {
-            AccountName = accountName;
-        }
+        private string _dbCopyFilePath;
 
         #region helpers
+        private void CopyTempDb(string accountName)
+        {
+            string appDatadir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string dbOriginalFile = string.Format("{0}\\Skype\\{1}\\main.db", appDatadir, accountName);
+            _dbCopyFilePath = string.Format("{0}\\Skype\\{1}\\main_copy.db", appDatadir, accountName);
+            if (File.Exists(dbOriginalFile))
+            {
+                File.Copy(dbOriginalFile, _dbCopyFilePath, true);
+            }
+        }
+
+        private void RemoveTempDb()
+        {
+            if (File.Exists(_dbCopyFilePath))
+            {
+                File.Delete(_dbCopyFilePath);
+            }
+        }
         private List<T> GetList<T>(string sql)
         {
-            using (var connection = new SQLiteConnection(Utils.CopyDb(AccountName), SQLiteOpenFlags.ReadOnly))
+            using (var connection = new SQLiteConnection(_dbCopyFilePath, SQLiteOpenFlags.ReadOnly))
             {
                 SQLiteCommand command = connection.CreateCommand(sql);
                 return command.ExecuteQuery<T>();
-            } 
+            }
         }
         #endregion
+        public SkypeDal_7()
+        {
+            CopyTempDb(ConfigurationManager.AppSettings["botSkypeName"]);
+        }
 
         public List<SkypeContact> GetAllContacts()
         {
@@ -45,7 +63,7 @@ namespace SkypeCore
 
         public List<SkypeMessage> GetAllMessagesContains(string filter)
         {
-            return GetList<SkypeMessage>("select * from messages where body_xml like '%" + filter+"%'");
+            return GetList<SkypeMessage>("select * from messages where body_xml like '%" + filter + "%'");
         }
 
         public List<SkypeMessage> GetAllMessagesContains(string[] filter)
@@ -71,5 +89,9 @@ namespace SkypeCore
                     conversationId, lastMessageId));
         }
 
+        public void Dispose()
+        {
+            RemoveTempDb();
+        }
     }
 }
