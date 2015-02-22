@@ -66,7 +66,9 @@
     <Compile Include="BotEngine\EngineImplementations\7.0\SkypeListener70.cs" />
     <Compile Include="BotEngine\EngineImplementations\7.0\SkypeSendMessageService70.cs" />
     <Compile Include="BotEngine\EngineImplementations\SkypeBaseService.cs" />
+    <Compile Include="BotEngine\HandleMessageService.cs" />
     <Compile Include="BotEngine\IBotCoreService.cs" />
+    <Compile Include="BotEngine\IHandleMessageService.cs" />
     <Compile Include="BotEngine\ISkypeInitService.cs" />
     <Compile Include="BotEngine\ISkypeListener.cs" />
     <Compile Include="BotEngine\ISkypeSendMessageService.cs" />

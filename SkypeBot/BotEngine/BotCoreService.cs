@@ -1,14 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Windows.Automation;
-using ChatterBotAPI;
-using SkypeBot.BotEngine.EngineImplementations._7._0;
 
 namespace SkypeBot.BotEngine
 {
@@ -17,17 +9,16 @@ namespace SkypeBot.BotEngine
         private readonly ISkypeInitService _initService;
         private readonly ISkypeSendMessageService _sendMessageService;
         private readonly ISkypeListener _skypeListener;
+        private readonly IHandleMessageService _handeMessageService;
         private readonly Queue<SkypeMessage> _skypeMessages = new Queue<SkypeMessage>();
         private Timer _processTimer;
-        private ChatterBotSession _chatterBot = null;
-        public BotCoreService(ISkypeInitService initService, ISkypeSendMessageService sendMessageService, ISkypeListener skypeListener)
+        
+        public BotCoreService(ISkypeInitService initService, ISkypeSendMessageService sendMessageService, ISkypeListener skypeListener, IHandleMessageService handeMessageService)
         {
             _initService = initService;
             _sendMessageService = sendMessageService;
             _skypeListener = skypeListener;
-            ChatterBotFactory factory = new ChatterBotFactory();
-
-            _chatterBot = factory.Create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477").CreateSession();
+            _handeMessageService = handeMessageService;
         }
 
         public void InitSkype()
@@ -56,18 +47,7 @@ namespace SkypeBot.BotEngine
 
         private void _skypeListener_SkypeMessageReceived(string source, string message)
         {
-            Debug.WriteLine("Message received from {0}: {1}", source, message);
-            //var contactMatches = Regex.Matches(source, @"[#\$]([\w.-]+)[/;]")
-            //    .Cast<Match>()
-            //    .FirstOrDefault(m => !m.Groups[1].Value.Contains(ConfigurationManager.AppSettings["botSkypeName"]));
-            //if (contactMatches != null)
-            //{
-            //    string contact =
-            //        contactMatches
-            //            .Groups[1].Value;
-            string response = _chatterBot.Think(message);
-            SendMessage(source, response);
-            //}
+            _handeMessageService.HandleIncomeMessage(source, message, SendMessage);
         }
 
         public void SendMessage(string contact, string message)
