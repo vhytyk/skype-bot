@@ -8,6 +8,8 @@ using SkypeBot.BotEngine.EngineImplementations._7._0;
 using SkypeBot.SkypeDB;
 using SkypeBot.SkypeDB.SkypeDalImplementations;
 using SkypeBotRMQ;
+using SkypeBotRulesLibrary;
+using SkypeBotRulesLibrary.Fakes;
 
 namespace SkypeBot
 {
@@ -40,6 +42,9 @@ namespace SkypeBot
 
             _container.RegisterType<ISkypeDal, SkypeDal7>(new PerResolveLifetimeManager());
             _container.RegisterType<IRmqSkypeService, RmqSkypeService>(new PerResolveLifetimeManager());
+
+            _container.RegisterType<IRuleDal, FakeRuleDal>(new PerResolveLifetimeManager());
+            _container.RegisterType<IRuleService, BasicRuleService>(new PerResolveLifetimeManager());
         }
 
         public T Reslove<T>()

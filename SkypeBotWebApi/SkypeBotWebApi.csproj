@@ -40,6 +40,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -149,11 +158,13 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SkypeApiController.cs" />
+    <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resolver\UnityResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -222,6 +233,10 @@
     <ProjectReference Include="..\SkypeBotRMQ\SkypeBotRMQ.csproj">
       <Project>{598e6fa5-4d4d-418f-a3e2-4348f5a31bc0}</Project>
       <Name>SkypeBotRMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkypeBotRulesLibrary\SkypeBotRulesLibrary.csproj">
+      <Project>{dcb7e827-8e6b-40eb-a86c-a7d155c1b30b}</Project>
+      <Name>SkypeBotRulesLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

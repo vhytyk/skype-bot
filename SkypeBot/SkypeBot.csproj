@@ -123,7 +123,9 @@
       <DependentUpon>WindowTree.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config_" />
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -139,6 +141,10 @@
     <ProjectReference Include="..\SkypeBotRMQ\SkypeBotRMQ.csproj">
       <Project>{598e6fa5-4d4d-418f-a3e2-4348f5a31bc0}</Project>
       <Name>SkypeBotRMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkypeBotRulesLibrary\SkypeBotRulesLibrary.csproj">
+      <Project>{dcb7e827-8e6b-40eb-a86c-a7d155c1b30b}</Project>
+      <Name>SkypeBotRulesLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
