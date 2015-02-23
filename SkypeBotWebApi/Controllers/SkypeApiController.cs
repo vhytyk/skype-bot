@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkypeBotRMQ;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,9 +11,14 @@ namespace SkypeBotWebApi.Controllers
     public class SkypeController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult Test(string param1)
+        public IHttpActionResult SendMessage(string to, string msg)
         {
-            return Ok(param1);
+            var rmqService = new RmqSkypeService();
+            rmqService.PushMessage(new RmqSkypeMessage { 
+                Conversation = to,
+                Message = msg
+            });
+            return Ok();
         }
     }
 }
