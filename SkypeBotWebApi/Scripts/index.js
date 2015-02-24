@@ -9,7 +9,7 @@
         type: "POST",
         data: message,
         success: function(result) {
-            console.log(result);
+            alert("successfully sent!");
         }
     });
 
