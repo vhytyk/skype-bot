@@ -19,7 +19,7 @@ namespace SkypeBotRulesLibrary
 
         public string GetApplicableRuleResult(string message)
         {
-            List<SkypeBotRule> ruleList = _dal.GetAllRules();
+            List<SkypeBotRule> ruleList = GetAllRules();
            
             string result = null;
             foreach (SkypeBotRule rule in ruleList) 
@@ -58,6 +58,12 @@ namespace SkypeBotRulesLibrary
         public SkypeBotRule GetById(int id)
         {
             return _dal.GetById(id);
+        }
+
+
+        public bool DeleteRule(int id)
+        {
+            return _dal.DeleteRule(id);
         }
     }
 }

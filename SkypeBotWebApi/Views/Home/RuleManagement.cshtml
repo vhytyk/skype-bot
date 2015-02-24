@@ -1,0 +1,33 @@
+﻿@section scripts
+{
+    @Scripts.Render("~/bundles/rulemanagement")    
+}
+
+<h2>Skype Bot Rules</h2>
+
+<div id="body">
+    <ul id="rules"></ul>
+
+    <h3>Add new rule: </h3><br />
+    <div class="form">
+        <div class="row">
+            <div>Name</div>
+            <div class="input"><input class="name" /></div>
+        </div>
+        <div class="row">
+            <div>Rule</div>
+            <div class="input"><input class="rule" /></div>
+        </div>
+        <div class="row">
+            <div>Value</div>
+            <div class="input"><input class="val" /></div>
+        </div>
+        <div class="row">
+            <button id="addRule">Add</button>
+        </div>
+    </div>
+</div>
+
+
+
+

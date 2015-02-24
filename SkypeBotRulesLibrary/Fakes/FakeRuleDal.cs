@@ -4,64 +4,67 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
+using System.IO;
+using SQLite;
+using System.Configuration;
 
 namespace SkypeBotRulesLibrary.Fakes
 {
     public class FakeRuleDal: IRuleDal
     {
-        private const string CacheName = "skypeBotRulesCache";
+        private string _dbFilePath;
 
-        private List<SkypeBotRule> _defaultRules = new List<SkypeBotRule> { 
-            new SkypeBotRule {
-                Id = 1,
-                Name = "Git History",
-                Rule = @"\bcompare\s+(?<branch>[\w_-]+)\s+with\s+(?<masterBranch>[\w_-]+)\s+in\s+(?<repo>[\w_-]+)\b",
-                Value = "http://highlander.justanswer.local:777/hli.aspx?repo=$repo$&branch=$branch$&masterBranch=$masterBranch$"
-            },
-            new SkypeBotRule {
-                Id = 1,
-                Name = "wiki ed",
-                Rule = @"wiki ed",
-                Value = "https://wiki/display/ua/Engineering+Days+Schedule"
+        public FakeRuleDal()
+        {
+            _dbFilePath = ConfigurationManager.AppSettings["DBPath"];
+        }
+
+        #region helpers
+        
+        private List<T> GetList<T>(string sql)
+        {
+            using (var connection = new SQLiteConnection(_dbFilePath, SQLiteOpenFlags.ReadOnly))
+            {
+                SQLiteCommand command = connection.CreateCommand(sql);
+                return command.ExecuteQuery<T>();
             }
-        };
+        }
+        #endregion
 
         public List<SkypeBotRule> GetAllRules()
         {
-            ObjectCache cache = MemoryCache.Default;
-            var ruleList = cache[CacheName] as List<SkypeBotRule>;
-            if (ruleList == null)
-            {
-                ruleList = _defaultRules;
-                var policy = new CacheItemPolicy();
-                cache.Set(CacheName, ruleList, policy);
-            }
-            return ruleList;
+            return GetList<SkypeBotRule>("select * from Rules");
         }
 
         public bool AddRule(SkypeBotRule newRule)
         {
-            bool result = false;
-            if (newRule != null)
+            using (var connection = new SQLiteConnection(_dbFilePath, SQLiteOpenFlags.ReadWrite))
             {
-                List<SkypeBotRule> currentList = GetAllRules();
-                if (!currentList.Any(r => r.Name == newRule.Name)) 
-                {
-                    currentList.Add(newRule);
-                    var policy = new CacheItemPolicy();
-                    ObjectCache cache = MemoryCache.Default;
-                    cache.Set(CacheName, currentList, policy);
-                    result = true;
-                }
+                SQLiteCommand command = connection.CreateCommand("insert into Rules(Name, Rule, Value) values (?,?,?)"
+                    , newRule.Name
+                    , newRule.Rule
+                    , newRule.Value);
+                return command.ExecuteNonQuery() > 0;
             }
-            return result;
         }
 
         public SkypeBotRule GetById(int id)
         {
-            List<SkypeBotRule> currentList = GetAllRules();
-            return currentList.SingleOrDefault(r => r.Id == id);
+            using (var connection = new SQLiteConnection(_dbFilePath, SQLiteOpenFlags.ReadOnly))
+            {
+                SQLiteCommand command = connection.CreateCommand(string.Format("select * from Rules where Id={0}", id));
+                return command.ExecuteQuery<SkypeBotRule>().FirstOrDefault();
+            }
+        }
+
+
+        public bool DeleteRule(int id)
+        {
+            using (var connection = new SQLiteConnection(_dbFilePath, SQLiteOpenFlags.ReadWrite))
+            {
+                SQLiteCommand command = connection.CreateCommand("delete from Rules where Id=?", id);
+                return command.ExecuteNonQuery() > 0;
+            }
         }
     }
 }

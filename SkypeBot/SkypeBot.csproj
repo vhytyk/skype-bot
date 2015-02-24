@@ -117,9 +117,6 @@
     <Compile Include="SkypeDB\Entities.cs" />
     <Compile Include="SkypeDB\ISkypeDal.cs" />
     <Compile Include="SkypeDB\SkypeDalImplementations\SkypeDal_7.cs" />
-    <Compile Include="SkypeDB\SQLite.cs" />
-    <Compile Include="SkypeDB\SQLiteAsync.cs" />
-    <Compile Include="SkypeDB\Utils.cs" />
     <Compile Include="UnityConfiguration.cs" />
     <Compile Include="Winapi\Application.cs" />
     <Compile Include="Winapi\Input.cs" />
@@ -176,6 +173,10 @@
     <ProjectReference Include="..\SkypeBotRulesLibrary\SkypeBotRulesLibrary.csproj">
       <Project>{dcb7e827-8e6b-40eb-a86c-a7d155c1b30b}</Project>
       <Name>SkypeBotRulesLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLite\SQLite.csproj">
+      <Project>{2651a242-c61e-4ffa-b7b1-c9962f34de4f}</Project>
+      <Name>SQLite</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

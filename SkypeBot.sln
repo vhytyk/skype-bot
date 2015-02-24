@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkypeBotRMQ", "SkypeBotRMQ\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkypeBotRulesLibrary", "SkypeBotRulesLibrary\SkypeBotRulesLibrary.csproj", "{DCB7E827-8E6B-40EB-A86C-A7D155C1B30B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLite", "SQLite\SQLite.csproj", "{2651A242-C61E-4FFA-B7B1-C9962F34DE4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DCB7E827-8E6B-40EB-A86C-A7D155C1B30B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCB7E827-8E6B-40EB-A86C-A7D155C1B30B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCB7E827-8E6B-40EB-A86C-A7D155C1B30B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2651A242-C61E-4FFA-B7B1-C9962F34DE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2651A242-C61E-4FFA-B7B1-C9962F34DE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2651A242-C61E-4FFA-B7B1-C9962F34DE4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2651A242-C61E-4FFA-B7B1-C9962F34DE4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

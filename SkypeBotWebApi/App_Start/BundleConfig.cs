@@ -26,6 +26,9 @@ namespace SkypeBotWebApi
 
             bundles.Add(new ScriptBundle("~/bundles/index").Include(
                   "~/scripts/index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/rulemanagement").Include(
+                 "~/scripts/rule-management.js"));
         }
     }
 }
