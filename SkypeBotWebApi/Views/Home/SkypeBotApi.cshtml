@@ -1,10 +1,18 @@
 ﻿@{
     ViewBag.Title = "SkypeBotApi";
 }
+@section scripts
+{
+    @Scripts.Render("~/bundles/index")    
+}
 
 <h2>SkypeBotApi</h2>
 
 Conversation: <br />
-<input name="to" /><br />
+<input class="to" /><br />
+Message: <br />
+<textarea class="msg"></textarea><br />
+<br />
+<button id="sendButton">Send</button>
 
 

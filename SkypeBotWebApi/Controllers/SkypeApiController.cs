@@ -1,4 +1,5 @@
-﻿using SkypeBotRMQ;
+﻿using Newtonsoft.Json.Linq;
+using SkypeBotRMQ;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,14 @@ namespace SkypeBotWebApi.Controllers
                 Conversation = to,
                 Message = msg
             });
+            return Ok();
+        }
+
+        [HttpPost]
+        public IHttpActionResult SendMessagePost(RmqSkypeMessage jsonData)
+        {
+            var rmqService = new RmqSkypeService();
+            rmqService.PushMessage(jsonData);
             return Ok();
         }
     }
