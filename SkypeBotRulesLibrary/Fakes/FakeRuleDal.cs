@@ -18,6 +18,12 @@ namespace SkypeBotRulesLibrary.Fakes
                 Name = "Git History",
                 Rule = @"\bcompare\s+(?<branch>[\w_-]+)\s+with\s+(?<masterBranch>[\w_-]+)\s+in\s+(?<repo>[\w_-]+)\b",
                 Value = "http://highlander.justanswer.local:777/hli.aspx?repo=$repo$&branch=$branch$&masterBranch=$masterBranch$"
+            },
+            new SkypeBotRule {
+                Id = 1,
+                Name = "wiki ed",
+                Rule = @"wiki ed",
+                Value = "https://wiki/display/ua/Engineering+Days+Schedule"
             }
         };
 

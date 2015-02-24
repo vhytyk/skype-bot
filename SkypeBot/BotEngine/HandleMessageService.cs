@@ -23,11 +23,11 @@ namespace SkypeBot.BotEngine
             {
                 responseAction(source, ruleServiceResponse);
             }
-            else
-            {
-                string response = _chatterBot.Think(message);
-                responseAction(source, response);
-            }
+            //else
+            //{
+            //    string response = _chatterBot.Think(message);
+            //    responseAction(source, response);
+            //}
         }
     }
 }
