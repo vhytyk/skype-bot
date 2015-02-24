@@ -3,5 +3,6 @@
   <appSettings>
     <add key="botSkypeName" value="skypebot"/>
     <add key="botSkypePassword" value="skypebot"/>
+	 <add key="DBPath" value="..\DB\SkypeBotData.sqlite"/>
   </appSettings>
 </configuration> 
