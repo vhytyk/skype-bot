@@ -54,5 +54,10 @@ namespace SkypeBotRulesLibrary
         {
             return _dal.GetAllRules();
         }
+
+        public SkypeBotRule GetById(int id)
+        {
+            return _dal.GetById(id);
+        }
     }
 }

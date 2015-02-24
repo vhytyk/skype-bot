@@ -57,5 +57,11 @@ namespace SkypeBotRulesLibrary.Fakes
             }
             return result;
         }
+
+        public SkypeBotRule GetById(int id)
+        {
+            List<SkypeBotRule> currentList = GetAllRules();
+            return currentList.SingleOrDefault(r => r.Id == id);
+        }
     }
 }

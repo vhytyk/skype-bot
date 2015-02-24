@@ -11,5 +11,6 @@ namespace SkypeBotRulesLibrary
         string GetApplicableRuleResult(string message);
         bool AddRule(SkypeBotRule rule);
         List<SkypeBotRule> GetAllRules();
+        SkypeBotRule GetById(int id);
     }
 }

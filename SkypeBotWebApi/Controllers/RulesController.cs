@@ -17,9 +17,19 @@ namespace SkypeBotWebApi.Controllers
             _ruleService = ruleService;
         }
 
-        public IEnumerable<SkypeBotRule> GetAll()
+        public IEnumerable<SkypeBotRule> Get()
         {
             return _ruleService.GetAllRules();
+        }
+
+        public SkypeBotRule Get(int id)
+        {
+            return _ruleService.GetById(id);
+        }
+
+        public bool Post([FromBody] SkypeBotRule newRule)
+        {
+            return _ruleService.AddRule(newRule);
         }
     }
 }
