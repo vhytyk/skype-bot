@@ -14,5 +14,11 @@ namespace SkypeBotWebApi.Controllers
 
             return View();
         }
+
+        public ActionResult SkypeBotApi()
+        {
+            ViewBag.Title = "Skype bot api";
+            return View();
+        }
     }
 }

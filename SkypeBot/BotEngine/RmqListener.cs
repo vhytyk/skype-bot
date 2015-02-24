@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using SkypeBotRMQ;
 
@@ -6,13 +7,32 @@ namespace SkypeBot.BotEngine
 {
     public class RmqListener : IRmqListener
     {
-        private Timer _timer; 
-
+        private Timer _timer;
+        private bool pulling;
         private void PullFromRmq(object state)
         {
-            var service = UnityConfiguration.Instance.Reslove<IRmqSkypeService>();
-            RmqSkypeMessage message = service.PullMessage();
-            OnSkypeMessageReceived(message.Conversation, message.Message);
+            if (pulling)
+            {
+                return;
+            }
+            try
+            {
+                pulling = true;
+                var service = UnityConfiguration.Instance.Reslove<IRmqSkypeService>();
+                RmqSkypeMessage message = service.PullMessage();
+                if (message != null)
+                {
+                    OnSkypeMessageReceived(message.Conversation, message.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                pulling = false;
+            }
         }
 
         private void OnSkypeMessageReceived(string source, string message)
