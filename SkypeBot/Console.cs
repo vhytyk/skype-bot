@@ -37,6 +37,7 @@ namespace SkypeBot
                     outputBox.SelectionStart = 0;
                 }));
             }));
+            _botCoreService.InitSkype();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -45,12 +46,6 @@ namespace SkypeBot
             _botCoreService.Dispose();
             Process.GetCurrentProcess().Kill();
         }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            _botCoreService.InitSkype();
-        }
-
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             var service = new RmqSkypeService();
