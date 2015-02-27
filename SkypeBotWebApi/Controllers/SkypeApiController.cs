@@ -19,7 +19,7 @@ namespace SkypeBotWebApi.Controllers
             rmqService.PushMessage(new RmqSkypeMessage
             {
                 Conversation = to,
-                Message = string.Format("{0} build of {1} branch {2} for {3} node", job, revision, eventName, node)
+                Message = string.Format("(*) {0} build of {1} branch *{2}* for {3} node", job, revision, eventName, node)
             });
             return Ok();
         }
