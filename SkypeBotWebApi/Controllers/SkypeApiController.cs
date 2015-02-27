@@ -19,6 +19,10 @@ namespace SkypeBotWebApi.Controllers
                     return "tkonyk.ja";
                 case "vhytyk":
                     return "victor.hytyk.prl";
+                case "syanuk":
+                    return "syanuk.ja";
+                case "yuriy.muzychuk":
+                    return "yuriy.muzychuk.prl";
                 default:
                     return cruName;
             }
