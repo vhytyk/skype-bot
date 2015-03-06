@@ -48,7 +48,6 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
 
         public void Initialize()
         {
-            
             ScanConversations(false);
             _readTimer = new Timer(Scan, null, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(2));
         }

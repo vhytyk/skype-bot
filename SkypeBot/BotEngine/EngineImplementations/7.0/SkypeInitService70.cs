@@ -39,7 +39,7 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                         _application = Application.Launch(
                             new ProcessStartInfo
                             {
-                                FileName = @"C:\Program Files (x86)\Skype\Phone\Skype.exe",
+                                FileName = ConfigurationManager.AppSettings["skypeAppPath"] ?? @"C:\Program Files (x86)\Skype\Phone\Skype.exe",
                                 Arguments = " /secondary"
                             }
                             );
