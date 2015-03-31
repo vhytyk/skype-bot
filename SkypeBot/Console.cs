@@ -37,7 +37,7 @@ namespace SkypeBot
                     outputBox.SelectionStart = 0;
                 }));
             }));
-            //_botCoreService.InitSkype();
+            _botCoreService.InitSkype();
         }
 
         protected override void OnClosing(CancelEventArgs e)
