@@ -37,7 +37,7 @@ namespace SkypeBot
                     outputBox.SelectionStart = 0;
                 }));
             }));
-            _botCoreService.InitSkype();
+            //_botCoreService.InitSkype();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -49,11 +49,21 @@ namespace SkypeBot
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             var service = new RmqSkypeService();
-            service.PushMessage(new RmqSkypeMessage(){Conversation = "test", Message = "lalala"});
-            RmqSkypeMessage message = service.PullMessage();
+            service.PushMessage(new RmqSkypeMessage(){Conversation = "ivan.sokolovich.prl", Message = "You were added on CR: http://crucible/cru/CR-248"});
+            service.PushMessage(new RmqSkypeMessage() { Conversation = "tkonyk.ja", Message = "You were added on CR: http://crucible/cru/CR-248" });
+            /*RmqSkypeMessage message = service.PullMessage();
             Debug.WriteLine(message.Conversation);
-            Debug.WriteLine(message.Message);
+            Debug.WriteLine(message.Message);*/
+            RmqListener listener = new RmqListener();
+            listener.SkypeMessageReceived += listener_SkypeMessageReceived;
+            listener.Initialize();
             //new WindowTree(UnityConfiguration.Instance.Reslove<ISkypeInitService>().GetMainWindow()).ShowDialog();
+        }
+
+        void listener_SkypeMessageReceived(string source, string message)
+        {
+            Debug.WriteLine(source);
+            Debug.WriteLine(message);
         }
     }
 }

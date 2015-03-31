@@ -55,14 +55,10 @@ namespace SkypeBotRMQ
                 using (var channel = connection.CreateModel())
                 {
                     channel.QueueDeclare(skypeMessageQueue, false, false, false, null);
-
-                    var consumer = new QueueingBasicConsumer(channel);
-                    channel.BasicConsume(skypeMessageQueue, true, consumer);
-
-                    var ea = new BasicDeliverEventArgs();
-                    if (consumer.Queue.Dequeue(100, out ea))
+                    BasicGetResult result = channel.BasicGet(skypeMessageQueue, true);
+                    if (result != null)
                     {
-                        var body = ea.Body;
+                        var body = result.Body;
                         var message = Encoding.UTF8.GetString(body);
                         return DeSerialize(message);
                     }
