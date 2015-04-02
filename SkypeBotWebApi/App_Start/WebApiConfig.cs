@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using SkypeBotRulesLibrary.Implementations;
+using SkypeBotRulesLibrary.Interfaces;
 
 namespace SkypeBotWebApi
 {
@@ -16,6 +18,8 @@ namespace SkypeBotWebApi
             var container = new UnityContainer();
             container.RegisterType<IRuleDal, FakeRuleDal>(new PerResolveLifetimeManager());
             container.RegisterType<IRuleService, BasicRuleService>(new PerResolveLifetimeManager());
+            container.RegisterType<ISkypeNameDal, SkypeNameDal>(new PerResolveLifetimeManager());
+            container.RegisterType<ISkypeNameService, SkypeNameService>(new PerResolveLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes

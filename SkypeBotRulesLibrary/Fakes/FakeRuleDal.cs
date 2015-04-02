@@ -5,32 +5,14 @@ using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using SkypeBotRulesLibrary.Implementations;
 using SQLite;
 using System.Configuration;
 
 namespace SkypeBotRulesLibrary.Fakes
 {
-    public class FakeRuleDal: IRuleDal
+    public class FakeRuleDal: BaseDal, IRuleDal
     {
-        private string _dbFilePath;
-
-        public FakeRuleDal()
-        {
-            _dbFilePath = ConfigurationManager.AppSettings["DBPath"];
-        }
-
-        #region helpers
-        
-        private List<T> GetList<T>(string sql)
-        {
-            using (var connection = new SQLiteConnection(_dbFilePath, SQLiteOpenFlags.ReadOnly))
-            {
-                SQLiteCommand command = connection.CreateCommand(sql);
-                return command.ExecuteQuery<T>();
-            }
-        }
-        #endregion
-
         public List<SkypeBotRule> GetAllRules()
         {
             return GetList<SkypeBotRule>("select * from Rules");

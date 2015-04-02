@@ -1,0 +1,22 @@
+﻿@model SkypeBotWebApi.Models.SkypeNameInfoViewModel
+
+<h2>SkypeNames</h2>
+<table>
+    <tr>
+        <td>Id</td> 
+        <td>SkypeName</td> 
+        <td>DomainName</td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model.SkypeNames)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => item.Id)</td>
+            <td>@Html.DisplayFor(m => item.SkypeName)</td>
+            <td>@Html.DisplayFor(m => item.JaDomainName)</td>
+            <td>@Html.ActionLink("Remove", "Remove",new {id=item.Id})</td>
+        </tr>
+    }
+
+</table>
+@Html.ActionLink("Add new","AddNew")

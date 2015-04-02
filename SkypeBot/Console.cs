@@ -48,6 +48,7 @@ namespace SkypeBot
         }
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+            System.Console.WriteLine(e.ToString());
             var service = new RmqSkypeService();
             service.PushMessage(new RmqSkypeMessage(){Conversation = "ivan.sokolovich.prl", Message = "You were added on CR: http://crucible/cru/CR-248"});
             service.PushMessage(new RmqSkypeMessage() { Conversation = "tkonyk.ja", Message = "You were added on CR: http://crucible/cru/CR-248" });

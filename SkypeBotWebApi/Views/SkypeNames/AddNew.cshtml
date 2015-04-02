@@ -1,0 +1,21 @@
+﻿
+@model SkypeBotRulesLibrary.Entities.SkypeNameInfo
+@{
+    ViewBag.Title = "Add new skype name";
+}
+
+<h2>Add</h2>
+@using (Html.BeginForm("Add", "SkypeNames", FormMethod.Post, null))
+{
+    <div>
+        @Html.LabelFor(m => m.SkypeName)
+        @Html.EditorFor(m => m.SkypeName)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.JaDomainName)
+        @Html.EditorFor(m => m.JaDomainName)
+    </div>
+
+    <input type="submit" value="Add" />
+}
+
