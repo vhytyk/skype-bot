@@ -6,32 +6,43 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SkypeBotRulesLibrary.Implementations;
+using SkypeBotRulesLibrary.Interfaces;
 
 namespace SkypeBotWebApi.Controllers
 {
     public class SkypeController : ApiController
     {
+        private ISkypeNameService _skypeNameService;
+
+        public SkypeController()
+        {
+            _skypeNameService = new SkypeNameService();
+        }
         private string GetSkypeNameByCruName(string cruName)
         {
-            switch (cruName)
-            {
-                case "tkonyk":
-                    return "tkonyk.ja";
-                case "vhytyk":
-                    return "victor.hytyk.prl";
-                case "syanuk":
-                    return "syanuk.ja";
-                case "yuriy.muzychuk":
-                    return "yuriy.muzychuk.prl";
-                case "ivan":
-                    return "isokolovich.prl";
-                case "ivan.mihaylovskyy":
-                    return "ivan.mihaylovskyy.prl";
-                case "ivan.fedaka":
-                    return "ivan.fedaka.ja";
-                default:
-                    return cruName;
-            }
+            string skypeName = _skypeNameService.GetSkypeNameByDomainName(cruName) ?? cruName;
+            return skypeName;
+
+            //switch (cruName)
+            //{
+            //    case "tkonyk":
+            //        return "tkonyk.ja";
+            //    case "vhytyk":
+            //        return "victor.hytyk.prl";
+            //    case "syanuk":
+            //        return "syanuk.ja";
+            //    case "yuriy.muzychuk":
+            //        return "yuriy.muzychuk.prl";
+            //    case "ivan":
+            //        return "isokolovich.prl";
+            //    case "ivan.mihaylovskyy":
+            //        return "ivan.mihaylovskyy.prl";
+            //    case "ivan.fedaka":
+            //        return "ivan.fedaka.ja";
+            //    default:
+            //        return cruName;
+            //}
         }
 
         [HttpGet]
