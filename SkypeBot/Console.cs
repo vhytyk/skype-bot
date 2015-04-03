@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 using SkypeBot.BotEngine;
 using SkypeBot.BotEngine.EngineImplementations._7._0;
+using SkypeBot.SkypeDB.SkypeDalImplementations;
 using SkypeBotRMQ;
 
 namespace SkypeBot
@@ -48,17 +49,19 @@ namespace SkypeBot
         }
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            System.Console.WriteLine(e.ToString());
-            var service = new RmqSkypeService();
-            service.PushMessage(new RmqSkypeMessage(){Conversation = "ivan.sokolovich.prl", Message = "You were added on CR: http://crucible/cru/CR-248"});
-            service.PushMessage(new RmqSkypeMessage() { Conversation = "tkonyk.ja", Message = "You were added on CR: http://crucible/cru/CR-248" });
-            /*RmqSkypeMessage message = service.PullMessage();
-            Debug.WriteLine(message.Conversation);
-            Debug.WriteLine(message.Message);*/
-            RmqListener listener = new RmqListener();
-            listener.SkypeMessageReceived += listener_SkypeMessageReceived;
-            listener.Initialize();
-            //new WindowTree(UnityConfiguration.Instance.Reslove<ISkypeInitService>().GetMainWindow()).ShowDialog();
+            //new SkypeDal7().GetAllContacts().ForEach(x => Debug.WriteLine("{0}: {1}",x.Name, x.IsAuthorized));
+            new SkypeSendMessageService70(new SkypeInitService70()).AcceptContact("nauroskype");
+            //System.Console.WriteLine(e.ToString());
+            //var service = new RmqSkypeService();
+            //service.PushMessage(new RmqSkypeMessage(){Conversation = "ivan.sokolovich.prl", Message = "You were added on CR: http://crucible/cru/CR-248"});
+            //service.PushMessage(new RmqSkypeMessage() { Conversation = "tkonyk.ja", Message = "You were added on CR: http://crucible/cru/CR-248" });
+            ///*RmqSkypeMessage message = service.PullMessage();
+            //Debug.WriteLine(message.Conversation);
+            //Debug.WriteLine(message.Message);*/
+            //RmqListener listener = new RmqListener();
+            //listener.SkypeMessageReceived += listener_SkypeMessageReceived;
+            //listener.Initialize();
+            ////new WindowTree(UnityConfiguration.Instance.Reslove<ISkypeInitService>().GetMainWindow()).ShowDialog();
         }
 
         void listener_SkypeMessageReceived(string source, string message)

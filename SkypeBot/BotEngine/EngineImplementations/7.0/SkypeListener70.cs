@@ -12,12 +12,21 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
         private readonly IDictionary<string, long> _lastMessageIds = new ConcurrentDictionary<string, long>();
         private Timer _readTimer;
         public event SkypeMessageHandler SkypeMessageReceived;
+        public event FoundContactHandler FoundNewContact;
+        private List<string> acceptedList = new List<string>();
 
         private void OnSkypeMessageReceived(string source, string message)
         {
             if (null != SkypeMessageReceived)
             {
                 SkypeMessageReceived(source, message);
+            }
+        }
+        private void OnFoundNewContact(string contact)
+        {
+            if (null != FoundNewContact)
+            {
+                FoundNewContact(contact);
             }
         }
         private readonly object _locker = new object();
@@ -41,6 +50,18 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                             }
                             _lastMessageIds[conversation.Name] = message.Id;
                         });
+                    });
+
+                    skypeDal.GetAllContacts().ForEach(contact =>
+                    {
+                        if (!acceptedList.Contains(contact.Name) && !contact.IsAuthorized && contact.Name != ConfigurationManager.AppSettings["botSkypeName"])
+                        {
+                            if (raiseEvents)
+                            {
+                                acceptedList.Add(contact.Name);
+                                OnFoundNewContact(contact.Name);
+                            }
+                        }
                     });
                 }
             }

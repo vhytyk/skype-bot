@@ -23,26 +23,6 @@ namespace SkypeBotWebApi.Controllers
         {
             string skypeName = _skypeNameService.GetSkypeNameByDomainName(cruName) ?? cruName;
             return skypeName;
-
-            //switch (cruName)
-            //{
-            //    case "tkonyk":
-            //        return "tkonyk.ja";
-            //    case "vhytyk":
-            //        return "victor.hytyk.prl";
-            //    case "syanuk":
-            //        return "syanuk.ja";
-            //    case "yuriy.muzychuk":
-            //        return "yuriy.muzychuk.prl";
-            //    case "ivan":
-            //        return "isokolovich.prl";
-            //    case "ivan.mihaylovskyy":
-            //        return "ivan.mihaylovskyy.prl";
-            //    case "ivan.fedaka":
-            //        return "ivan.fedaka.ja";
-            //    default:
-            //        return cruName;
-            //}
         }
 
         [HttpGet]

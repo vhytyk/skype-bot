@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using SkypeBot.SkypeDB;
 
 namespace SkypeBot.BotEngine
 {
@@ -11,7 +12,8 @@ namespace SkypeBot.BotEngine
         private readonly ISkypeListener _skypeListener;
         private readonly IRmqListener _rmqListener;
         private readonly IHandleMessageService _handeMessageService;
-        private readonly Queue<SkypeMessage> _skypeMessages = new Queue<SkypeMessage>();
+        private readonly Queue<SkypeAction> _skypeActions = new Queue<SkypeAction>();
+        
         private Timer _processTimer;
         
         public BotCoreService(ISkypeInitService initService, ISkypeSendMessageService sendMessageService, ISkypeListener skypeListener, IHandleMessageService handeMessageService, IRmqListener rmqListener)
@@ -31,7 +33,17 @@ namespace SkypeBot.BotEngine
                 _skypeListener.Initialize();
                 _rmqListener.SkypeMessageReceived += _rmqListener_SkypeMessageReceived;
                 _skypeListener.SkypeMessageReceived += _skypeListener_SkypeMessageReceived;
+                _skypeListener.FoundNewContact += _skypeListener_FoundNewContact;
                 _processTimer = new Timer(ProcessQueue, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+            });
+        }
+
+        void _skypeListener_FoundNewContact(string source)
+        {
+            AddActionToQueue(new SkypeAction
+            {
+                ActionType = SkypeActionType.AcceptContact,
+                Contact = source
             });
         }
 
@@ -44,13 +56,21 @@ namespace SkypeBot.BotEngine
         {
             lock (_locker)
             {
-                if (_skypeMessages.Count == 0)
+                if (_skypeActions.Count == 0)
                 {
                     return;
                 }
 
-                SkypeMessage message = _skypeMessages.Dequeue();
-                _sendMessageService.SendMessage(message.Contact, message.Message);
+                SkypeAction message = _skypeActions.Dequeue();
+                switch (message.ActionType)
+                {
+                    case SkypeActionType.SendMessage:
+                        _sendMessageService.SendMessage(message.Contact, message.Message);
+                        break;
+                    case SkypeActionType.AcceptContact:
+                        _sendMessageService.AcceptContact(message.Contact);
+                        break;
+                }
             }
         }
 
@@ -61,18 +81,19 @@ namespace SkypeBot.BotEngine
 
         public void SendMessage(string contact, string message)
         {
-            AddMessageToQueue(new SkypeMessage
+            AddActionToQueue(new SkypeAction
             {
+                ActionType = SkypeActionType.SendMessage,
                 Contact = contact,
                 Message = message
             });
         }
         private readonly object _locker = new object();
-        void AddMessageToQueue(SkypeMessage message)
+        void AddActionToQueue(SkypeAction message)
         {
             lock (_locker)
             {
-                _skypeMessages.Enqueue(message);
+                _skypeActions.Enqueue(message);
             }
         }
 
@@ -86,8 +107,11 @@ namespace SkypeBot.BotEngine
         }
     }
 
-    public struct SkypeMessage
+    public enum SkypeActionType { SendMessage, AcceptContact}
+
+    public struct SkypeAction
     {
+        public SkypeActionType ActionType { get; set; }
         public string Contact { get; set; }
         public string Message { get; set; }
     }

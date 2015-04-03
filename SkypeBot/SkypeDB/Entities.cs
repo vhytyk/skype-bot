@@ -12,6 +12,8 @@ namespace SkypeBot.SkypeDB
         public string Name { get; set; }
         [Column("displayname")]
         public string DisplayName { get; set; }
+        [Column("isauthorized")]
+        public bool IsAuthorized { get; set; }
         public override string ToString()
         {
             return string.Format("{0}", DisplayName);
