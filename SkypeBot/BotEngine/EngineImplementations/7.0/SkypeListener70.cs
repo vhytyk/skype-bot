@@ -51,18 +51,19 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                             _lastMessageIds[conversation.Name] = message.Id;
                         });
                     });
-
-                    skypeDal.GetAllContacts().ForEach(contact =>
-                    {
-                        if (!acceptedList.Contains(contact.Name) && !contact.IsAuthorized && contact.Name != ConfigurationManager.AppSettings["botSkypeName"])
-                        {
-                            if (raiseEvents)
-                            {
-                                acceptedList.Add(contact.Name);
-                                OnFoundNewContact(contact.Name);
-                            }
-                        }
-                    });
+                    
+                    //skypeDal.GetAllContacts().ForEach(contact =>
+                    //{
+                    //    if (!acceptedList.Contains(contact.Name) 
+                    //        && !contact.IsAuthorized && contact.Name != ConfigurationManager.AppSettings["botSkypeName"])
+                    //    {
+                    //        if (raiseEvents)
+                    //        {
+                    //            acceptedList.Add(contact.Name);
+                    //            OnFoundNewContact(contact.Name);
+                    //        }
+                    //    }
+                    //});
                 }
             }
         }
