@@ -25,8 +25,7 @@ namespace SkypeBotWebApi.Controllers
             return skypeName;
         }
 
-        [HttpGet]
-        public IHttpActionResult AddedOnReview(string reviewer, string cruid)
+        private IHttpActionResult SendCodeReviewMessage(string reviewer, string cruid, string message)
         {
             string skypeName = GetSkypeNameByCruName(reviewer);
             if (string.IsNullOrWhiteSpace(skypeName))
@@ -34,13 +33,25 @@ namespace SkypeBotWebApi.Controllers
                 return BadRequest("can't find skype name for " + reviewer);
             }
             var rmqService = new RmqSkypeService();
-            
+
             rmqService.PushMessage(new RmqSkypeMessage
             {
                 Conversation = GetSkypeNameByCruName(reviewer),
-                Message = string.Format("You were added on CR: http://crucible/cru/{0}", cruid)
+                Message = string.Format("{0}: http://crucible/cru/{1}", message, cruid)
             });
-            return Ok();
+
+             return Ok();
+        }
+
+        [HttpGet]
+        public IHttpActionResult UpdatedReview(string reviewer, string cruid)
+        {
+            return SendCodeReviewMessage(reviewer, cruid, "CR updated");
+        }
+        [HttpGet]
+        public IHttpActionResult AddedOnReview(string reviewer, string cruid)
+        {
+            return SendCodeReviewMessage(reviewer, cruid, "You were added on CR");
         }
 
         [HttpGet]
