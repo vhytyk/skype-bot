@@ -10,12 +10,12 @@ namespace SkypeBot.BotEngine
     {
         private readonly IChatBotProvider _chatterBot;
         private readonly IRuleService _ruleService;
-
         public HandleMessageService(IRuleService ruleService, IChatBotProvider chatterBot)
         {
             _chatterBot = chatterBot;
             _ruleService = ruleService;
         }
+
         public void HandleIncomeMessage(string source, string message, Action<string, string> responseAction)
         {
             Debug.WriteLine("Message received from {0}: {1}", source, message);
