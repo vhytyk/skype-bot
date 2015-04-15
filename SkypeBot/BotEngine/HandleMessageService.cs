@@ -30,7 +30,7 @@ namespace SkypeBot.BotEngine
                     string chatBotResponse = _chatterBot.Think(messageForBot);
                     if (!string.IsNullOrEmpty(chatBotResponse))
                     {
-                        chatBotResponse = string.Format("@{0}, {1}", message.AuthorDisplayName, message.Message);
+                        chatBotResponse = string.Format("@{0}, {1}", message.AuthorDisplayName, chatBotResponse);
                         responseAction(source, chatBotResponse.Trim());
                     }
                 }
