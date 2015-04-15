@@ -47,9 +47,9 @@ namespace SkypeBot.BotEngine
             });
         }
 
-        void _rmqListener_SkypeMessageReceived(string source, string message)
+        void _rmqListener_SkypeMessageReceived(string source, SkypeMessage message)
         {
-            SendMessage(source, message);
+            SendMessage(source, message.Message);
         }
 
         private void ProcessQueue(object state)
@@ -74,7 +74,7 @@ namespace SkypeBot.BotEngine
             }
         }
 
-        private void _skypeListener_SkypeMessageReceived(string source, string message)
+        private void _skypeListener_SkypeMessageReceived(string source, SkypeMessage message)
         {
             _handeMessageService.HandleIncomeMessage(source, message, SendMessage);
         }

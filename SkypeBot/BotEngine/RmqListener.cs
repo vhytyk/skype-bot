@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using SkypeBot.SkypeDB;
 using SkypeBotRMQ;
 
 namespace SkypeBot.BotEngine
@@ -22,7 +23,7 @@ namespace SkypeBot.BotEngine
                 RmqSkypeMessage message = service.PullMessage();
                 if (message != null)
                 {
-                    OnSkypeMessageReceived(message.Conversation, message.Message);
+                    OnSkypeMessageReceived(message.Conversation, new SkypeMessage {Message = message.Message});
                 }
             }
             catch (Exception ex)
@@ -35,7 +36,7 @@ namespace SkypeBot.BotEngine
             }
         }
 
-        private void OnSkypeMessageReceived(string source, string message)
+        private void OnSkypeMessageReceived(string source, SkypeMessage message)
         {
             if (null != SkypeMessageReceived)
             {

@@ -1,6 +1,8 @@
-﻿namespace SkypeBot.BotEngine
+﻿using SkypeBot.SkypeDB;
+
+namespace SkypeBot.BotEngine
 {
-    public delegate void SkypeMessageHandler(string source, string message);
+    public delegate void SkypeMessageHandler(string source, SkypeMessage message);
     public delegate void FoundContactHandler(string contact);
     public interface ISkypeListener
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
+using SkypeBot.SkypeDB;
 using SkypeBotRulesLibrary;
 
 namespace SkypeBot.BotEngine
@@ -25,7 +26,7 @@ namespace SkypeBot.BotEngine
 
             var handleMessageService = new HandleMessageService(service.Object, chatbot.Object);
             bool responded = false;
-            handleMessageService.HandleIncomeMessage("testsource", message, (s, m) =>
+            handleMessageService.HandleIncomeMessage("testsource", new SkypeMessage {Message = message}, (s, m) =>
             {
                 Assert.IsNotEmpty(m);
                 responded = true;

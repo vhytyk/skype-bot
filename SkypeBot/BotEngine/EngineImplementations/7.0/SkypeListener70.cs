@@ -15,7 +15,7 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
         public event FoundContactHandler FoundNewContact;
         private List<string> acceptedList = new List<string>();
 
-        private void OnSkypeMessageReceived(string source, string message)
+        private void OnSkypeMessageReceived(string source, SkypeMessage message)
         {
             if (null != SkypeMessageReceived)
             {
@@ -46,7 +46,7 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                         {
                             if (raiseEvents && message.Author != ConfigurationManager.AppSettings["botSkypeName"])
                             {
-                                OnSkypeMessageReceived(conversation.DisplayName, message.Message);
+                                OnSkypeMessageReceived(conversation.DisplayName, message);
                             }
                             _lastMessageIds[conversation.Name] = message.Id;
                         });
