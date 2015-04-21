@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
+using Rally.RestApi;
+using Rally.RestApi.Response;
 using SkypeBot.BotEngine.Commands;
 using SkypeBot.SkypeDB;
 using SkypeBotRulesLibrary;
@@ -40,7 +43,7 @@ namespace SkypeBot.BotEngine
 
         [TestCase("bot#rl JA19189", "https://rally1.rallydev.com/#/detail/userstory/33811428317")]
         [TestCase("bot#rallylink DE11324", "https://rally1.rallydev.com/#/detail/defect/29658060588")]
-        public void TestRallyCommand(string command, string response)
+        public void TestRallyLinkCommand(string command, string response)
         {
             var service = new Mock<IRuleService>();
             service.Setup(s => s.GetApplicableRuleResult(It.IsAny<string>())).Returns(string.Empty);
@@ -56,6 +59,30 @@ namespace SkypeBot.BotEngine
                 Assert.AreEqual(m, response);
             });
             
+
+        }
+
+        [Test]
+        public void TestReleaseNumberCommand()
+        {
+            var command = new ReleaseVersionSkypeCommand();
+            command.IterationDateTime = new DateTime(2015, 4, 21);
+            string result = command.RunCommand();
+            Assert.AreEqual(result, "487 (4/23/15)");
+
+        }
+
+        [Test]
+        public void TestHelpCommand()
+        {
+            var command = new HelpCommand();
+            command.Init("relver");
+            string result = command.RunCommand();
+            Assert.AreEqual(result, "Returns current release number. Usage: bot#[relver|rv]");
+
+            command = new HelpCommand();
+            result = command.RunCommand();
+            Assert.AreEqual(result, "Commands: rallylink, relver");
 
         }
     }
