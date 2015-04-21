@@ -27,7 +27,7 @@ namespace SkypeBot.BotEngine
                 Name = "Help",
                 Command = "help",
                 ShortCommand = "h",
-                CommandClassType = typeof (RallyLinkSkypeCommand),
+                CommandClassType = typeof (HelpCommand),
                 Description = "Provides list of commands or help for particular one. Usages: bot#[help|h] [command]####"
             },
             new SkypeCommandInfo

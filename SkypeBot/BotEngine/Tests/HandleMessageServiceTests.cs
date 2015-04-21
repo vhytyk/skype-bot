@@ -82,7 +82,7 @@ namespace SkypeBot.BotEngine
 
             command = new HelpCommand();
             result = command.RunCommand();
-            Assert.AreEqual(result, "Commands: rallylink, relver");
+            Assert.AreEqual(result, "Commands: help, rallylink, relver");
 
         }
     }
