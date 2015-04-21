@@ -21,7 +21,6 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
         {
             _initService.Initialize(() =>
             {
-                Debug.WriteLine("searching for contact: " + contact);
                 Mouse.Instance.Click(_initService.GetMainWindow().FindFirst(TreeScope.Descendants,
                     new PropertyCondition(AutomationElement.ClassNameProperty, "TSearchControl")).GetClickablePoint());
                 SelectAllAndRemove();
@@ -29,7 +28,6 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                 
                 Mouse.Instance.Click(_initService.GetMainWindow().GetElementByName("Contacts")
                     .FindFirst(TreeScope.Children, Condition.TrueCondition).GetClickablePoint());
-                Debug.WriteLine("sending message to contact: " + contact);
                 Point point = _initService.GetMainWindow().GetElementByName("Insert emoticon").GetClickablePoint();
                 point.X -= 50;
                 Mouse.Instance.Click(point);
@@ -44,7 +42,6 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
         {
             _initService.Initialize(() =>
             {
-                Debug.WriteLine("searching for contact to add: " + contact);
                 Mouse.Instance.Click(_initService.GetMainWindow().FindFirst(TreeScope.Descendants,
                     new PropertyCondition(AutomationElement.ClassNameProperty, "TSearchControl")).GetClickablePoint());
                 SelectAllAndRemove();
@@ -58,7 +55,6 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                         new PropertyCondition(AutomationElement.NameProperty, "Accept"));
                 if (null != acceptElement)
                 {
-                    Debug.WriteLine("accepting contact: "+contact);
                     Mouse.Instance.Click(acceptElement.GetClickablePoint());
                 }
 

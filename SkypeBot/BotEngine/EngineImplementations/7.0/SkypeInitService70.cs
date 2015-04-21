@@ -30,12 +30,10 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
 
                     if (_cachedMainWindow != null)
                     {
-                        Debug.WriteLine("attaching to skype");
                         _application = Application.Attach(_cachedMainWindow.Current.ProcessId);
                     }
                     else
                     {
-                        Debug.WriteLine("running skype");
                         _application = Application.Launch(
                             new ProcessStartInfo
                             {
@@ -65,7 +63,6 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                     if (windowPattern != null)
                         windowPattern.SetWindowVisualState(WindowVisualState.Normal);
 
-                    Debug.WriteLine("skype is ready");
                     if (afterInitAction != null)
                     {
                         afterInitAction();
@@ -90,7 +87,6 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
             mainWindow.ButtonClick("Sign in");
 
 
-            Debug.WriteLine("done");
         }
 
         internal AutomationElement GetMainLoginWindow()
