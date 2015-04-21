@@ -9,6 +9,19 @@ using Rally.RestApi.Response;
 
 namespace SkypeBot.BotEngine.Commands
 {
+    public static class RallyHelper
+    {
+        public static QueryResult RequetQuery(string artifact, Query query)
+        {
+            var restApi = new RallyRestApi();
+            restApi.Authenticate("victor.hytyk@justanswer.com", "Qwerty123$", "https://rally1.rallydev.com", proxy: null, allowSSO: false);
+
+            Request request = new Request(artifact);
+            request.Query = query;
+            return restApi.Query(request);
+        }
+    }
+
     public class RallyLinkSkypeCommand : ISkypeCommand
     {
         private string storyId = string.Empty;
@@ -29,13 +42,9 @@ namespace SkypeBot.BotEngine.Commands
         {
             if (!string.IsNullOrWhiteSpace(storyId))
             {
-                var restApi = new RallyRestApi();
-                restApi.Authenticate("victor.hytyk@justanswer.com", "Qwerty123$", "https://rally1.rallydev.com", proxy: null, allowSSO: false);
-
-                Request request = new Request(isDefect ? "defect" : "hierarchicalrequirement");
-                request.Query = new Query("FormattedID", Query.Operator.Equals, storyId);
-                QueryResult queryResult = restApi.Query(request);
-                dynamic result = queryResult.Results.FirstOrDefault();
+                dynamic result =
+                    RallyHelper.RequetQuery(isDefect ? "defect" : "hierarchicalrequirement",
+                        new Query("FormattedID", Query.Operator.Equals, storyId)).Results.FirstOrDefault();
                 if (null != result)
                 {
                     string url = string.Format("https://rally1.rallydev.com/#/detail/{0}/{1}",

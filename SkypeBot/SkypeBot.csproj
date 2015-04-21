@@ -102,7 +102,9 @@
   <ItemGroup>
     <Compile Include="BotEngine\AutomationExtensions.cs" />
     <Compile Include="BotEngine\BotCoreService.cs" />
+    <Compile Include="BotEngine\Commands\HelpCommand.cs" />
     <Compile Include="BotEngine\Commands\RallyLinkSkypeCommand.cs" />
+    <Compile Include="BotEngine\Commands\ReleaseVersionSkypeCommand.cs" />
     <Compile Include="BotEngine\Commands\WikiSkypeCommand.cs" />
     <Compile Include="BotEngine\EngineImplementations\7.0\SkypeInitService70.cs" />
     <Compile Include="BotEngine\EngineImplementations\7.0\SkypeListener70.cs" />

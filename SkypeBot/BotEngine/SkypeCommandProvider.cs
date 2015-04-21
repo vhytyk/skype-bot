@@ -19,17 +19,32 @@ namespace SkypeBot.BotEngine
     public class SkypeCommandProvider : ISkypeCommandProvider
     {
         #region commands
-        private IList<SkypeCommandInfo> _allCommandsInfos = new SkypeCommandInfo[]
+
+        public static IList<SkypeCommandInfo> AllCommandsMetaData = new []
         {
             new SkypeCommandInfo
             {
-                Name = "RallyLink",
+                Name = "Rally Link",
                 Command = "rallylink",
                 ShortCommand = "rl",
                 CommandClassType = typeof (RallyLinkSkypeCommand),
                 Description = "Get rally weblink by id. Usage: bot#[rallylink|rl] [JA|DE]####"
+            },
+            new SkypeCommandInfo
+            {
+                Name = "Release Number",
+                Command = "relver",
+                ShortCommand = "rv",
+                CommandClassType = typeof (ReleaseVersionSkypeCommand),
+                Description = "Returns current release number. Usage: bot#[relver|rv]"
             }
         };
+
+        public static SkypeCommandInfo GetCommandByName(string name)
+        {
+            return AllCommandsMetaData.FirstOrDefault(s => s.Command == name || s.ShortCommand == name);
+        }
+
         #endregion
 
         public ISkypeCommand GetCommand(string commandMessage)
@@ -37,10 +52,8 @@ namespace SkypeBot.BotEngine
             Match commandMatch = Regex.Match(commandMessage, @"^bot#(\w+)\s+(.*)");
             if (commandMatch.Success)
             {
-                ISkypeCommand result = null;
                 string commandName = commandMatch.Groups[1].Value;
-                SkypeCommandInfo info =
-                    _allCommandsInfos.FirstOrDefault(s => s.Command == commandName || s.ShortCommand == commandName);
+                SkypeCommandInfo info = GetCommandByName(commandName);
                 if (info != null)
                 {
                     var command = Activator.CreateInstance(info.CommandClassType) as ISkypeCommand;
