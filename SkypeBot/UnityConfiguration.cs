@@ -46,6 +46,7 @@ namespace SkypeBot
             _container.RegisterType<IRuleDal, FakeRuleDal>(new PerResolveLifetimeManager());
             _container.RegisterType<IRuleService, BasicRuleService>(new PerResolveLifetimeManager());
             _container.RegisterType<IChatBotProvider, ChatBotProvider>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<ISkypeCommandProvider, SkypeCommandProvider>(new ContainerControlledLifetimeManager());
         }
 
         public T Reslove<T>()
