@@ -28,7 +28,7 @@ namespace SkypeBot.BotEngine
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                ErrorLog.LogError("PullFromRmq error: {0}", ex.Message);
             }
             finally
             {

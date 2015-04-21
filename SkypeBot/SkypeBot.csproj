@@ -121,6 +121,7 @@
       <DependentUpon>Console.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleListener.cs" />
+    <Compile Include="ErrorLog.cs" />
     <Compile Include="ProcessInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

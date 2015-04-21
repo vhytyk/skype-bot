@@ -24,7 +24,7 @@ namespace SkypeBot.BotEngine.EngineImplementations
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error: " + ex +
+                ErrorLog.LogError("Error: " + ex +
                                 (ex.InnerException != null ? "; " + ex.InnerException.Message : ""));
             }
         }

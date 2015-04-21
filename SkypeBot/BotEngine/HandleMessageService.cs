@@ -19,27 +19,32 @@ namespace SkypeBot.BotEngine
         }
         public void HandleIncomeMessage(string source, SkypeMessage message, Action<string, string> responseAction)
         {
-            Debug.WriteLine("Message received from {0}: {1}", source, message);
-
-            Match chatBotMatch = Regex.Match(message.Message.Trim(), @"^bot,(.*)");
-            if (chatBotMatch.Success)
+            try
             {
-                string messageForBot = chatBotMatch.Groups[1].Value;
-                if (!string.IsNullOrEmpty(messageForBot))
+                Match chatBotMatch = Regex.Match(message.Message.Trim(), @"^bot,(.*)");
+                if (chatBotMatch.Success)
                 {
-                    string chatBotResponse = _chatterBot.Think(messageForBot);
-                    if (!string.IsNullOrEmpty(chatBotResponse))
+                    string messageForBot = chatBotMatch.Groups[1].Value;
+                    if (!string.IsNullOrEmpty(messageForBot))
                     {
-                        chatBotResponse = string.Format("@{0}, {1}", message.AuthorDisplayName, chatBotResponse);
-                        responseAction(source, chatBotResponse.Trim());
+                        string chatBotResponse = _chatterBot.Think(messageForBot);
+                        if (!string.IsNullOrEmpty(chatBotResponse))
+                        {
+                            chatBotResponse = string.Format("@{0}, {1}", message.AuthorDisplayName, chatBotResponse);
+                            responseAction(source, chatBotResponse.Trim());
+                        }
                     }
                 }
+
+                string ruleServiceResponse = _ruleService.GetApplicableRuleResult(message.Message);
+                if (!string.IsNullOrEmpty(ruleServiceResponse))
+                {
+                    responseAction(source, ruleServiceResponse);
+                }
             }
-            
-            string ruleServiceResponse = _ruleService.GetApplicableRuleResult(message.Message);
-            if(!string.IsNullOrEmpty(ruleServiceResponse))
+            catch (Exception ex)
             {
-                responseAction(source, ruleServiceResponse);
+                ErrorLog.LogError("HandleInclomeMessage error:\r\nsource:{0}\r\nmessage:{1}\r\nerror:{2}", source, message.ToString(), ex.Message);
             }
         }
     }

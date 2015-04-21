@@ -43,6 +43,7 @@ namespace SkypeBot
             return result;
 
         }
+        
         public override void Write(string message)
         {
             _writeDelegate(HandleMessage(message));
