@@ -30,7 +30,7 @@ namespace SkypeBot.BotEngine.Commands
             if (!string.IsNullOrWhiteSpace(storyId))
             {
                 var restApi = new RallyRestApi();
-                restApi.Authenticate("victor.hytyk@pearl.com", "trylystnyk_2015", "https://rally1.rallydev.com", proxy: null, allowSSO: false);
+                restApi.Authenticate("victor.hytyk@justanswer.com", "Qwerty123$", "https://rally1.rallydev.com", proxy: null, allowSSO: false);
 
                 Request request = new Request(isDefect ? "defect" : "hierarchicalrequirement");
                 request.Query = new Query("FormattedID", Query.Operator.Equals, storyId);
