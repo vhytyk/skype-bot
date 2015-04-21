@@ -81,6 +81,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rally.RestApi">
+      <HintPath>..\Rally.RestApi.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -99,6 +102,8 @@
   <ItemGroup>
     <Compile Include="BotEngine\AutomationExtensions.cs" />
     <Compile Include="BotEngine\BotCoreService.cs" />
+    <Compile Include="BotEngine\Commands\RallyLinkSkypeCommand.cs" />
+    <Compile Include="BotEngine\Commands\WikiSkypeCommand.cs" />
     <Compile Include="BotEngine\EngineImplementations\7.0\SkypeInitService70.cs" />
     <Compile Include="BotEngine\EngineImplementations\7.0\SkypeListener70.cs" />
     <Compile Include="BotEngine\EngineImplementations\7.0\SkypeSendMessageService70.cs" />
@@ -109,10 +114,13 @@
     <Compile Include="BotEngine\IChatBotProvider.cs" />
     <Compile Include="BotEngine\IHandleMessageService.cs" />
     <Compile Include="BotEngine\IRmqListener.cs" />
+    <Compile Include="BotEngine\ISkypeCommand.cs" />
+    <Compile Include="BotEngine\ISkypeCommandProvider.cs" />
     <Compile Include="BotEngine\ISkypeInitService.cs" />
     <Compile Include="BotEngine\ISkypeListener.cs" />
     <Compile Include="BotEngine\ISkypeSendMessageService.cs" />
     <Compile Include="BotEngine\RmqListener.cs" />
+    <Compile Include="BotEngine\SkypeCommandProvider.cs" />
     <Compile Include="BotEngine\Tests\HandleMessageServiceTests.cs" />
     <Compile Include="Console.cs">
       <SubType>Form</SubType>

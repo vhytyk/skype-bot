@@ -10,18 +10,21 @@ namespace SkypeBot.BotEngine
     public class HandleMessageService : IHandleMessageService
     {
         private readonly IChatBotProvider _chatterBot;
+        private readonly ISkypeCommandProvider _commandProvider;
         private readonly IRuleService _ruleService;
 
-        public HandleMessageService(IRuleService ruleService, IChatBotProvider chatterBot)
+        public HandleMessageService(IRuleService ruleService, IChatBotProvider chatterBot, ISkypeCommandProvider commandProvider)
         {
             _chatterBot = chatterBot;
+            _commandProvider = commandProvider;
             _ruleService = ruleService;
         }
         public void HandleIncomeMessage(string source, SkypeMessage message, Action<string, string> responseAction)
         {
             try
             {
-                Match chatBotMatch = Regex.Match(message.Message.Trim(), @"^bot,(.*)");
+                string skypeMessage = message.Message.Trim();
+                Match chatBotMatch = Regex.Match(skypeMessage, @"^bot,(.*)");
                 if (chatBotMatch.Success)
                 {
                     string messageForBot = chatBotMatch.Groups[1].Value;
@@ -32,6 +35,18 @@ namespace SkypeBot.BotEngine
                         {
                             chatBotResponse = string.Format("@{0}, {1}", message.AuthorDisplayName, chatBotResponse);
                             responseAction(source, chatBotResponse.Trim());
+                        }
+                    }
+                }
+                else
+                {
+                    ISkypeCommand command = _commandProvider.GetCommand(skypeMessage);
+                    if (null != command)
+                    {
+                        string response = command.RunCommand();
+                        if (!string.IsNullOrWhiteSpace(response))
+                        {
+                            responseAction(source, response);
                         }
                     }
                 }
