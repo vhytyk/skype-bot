@@ -12,7 +12,7 @@ namespace SkypeBot
         public static void LogError(string error, params object[] args)
         {
             Debug.WriteLine(error, args);
-            File.AppendAllText("error.log", string.Format(error, args));
+            File.AppendAllText("error.log", string.Format(error+"\r\n", args));
         }
     }
 }
