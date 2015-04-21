@@ -8,5 +8,6 @@ namespace SkypeBot.BotEngine
     public interface ISkypeCommand
     {
         string RunCommand();
+        void Init(string arguments);
     }
 }

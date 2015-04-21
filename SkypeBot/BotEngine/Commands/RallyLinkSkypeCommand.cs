@@ -13,7 +13,7 @@ namespace SkypeBot.BotEngine.Commands
     {
         private string storyId = string.Empty;
         private bool isDefect = false;
-        public RallyLinkSkypeCommand(string arguments)
+        public void Init(string arguments)
         {
             if (!string.IsNullOrWhiteSpace(arguments))
             {
