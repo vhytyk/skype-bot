@@ -28,7 +28,7 @@ namespace SkypeBot.BotEngine
                 Command = "help",
                 ShortCommand = "h",
                 CommandClassType = typeof (HelpCommand),
-                Description = "Provides list of commands or help for particular one. Usages: bot#[help|h] [command]####"
+                Description = "Provides list of commands or help for particular one. Usages: bot#[help|h] [command]"
             },
             new SkypeCommandInfo
             {
@@ -57,7 +57,7 @@ namespace SkypeBot.BotEngine
 
         public ISkypeCommand GetCommand(string commandMessage)
         {
-            Match commandMatch = Regex.Match(commandMessage, @"^bot#(\w+)\s+(.*)");
+            Match commandMatch = Regex.Match(commandMessage, @"^bot#(\w+)\s*(.*)");
             if (commandMatch.Success)
             {
                 string commandName = commandMatch.Groups[1].Value;

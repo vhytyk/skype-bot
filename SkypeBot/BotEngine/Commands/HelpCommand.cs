@@ -16,7 +16,7 @@ namespace SkypeBot.BotEngine.Commands
                 SkypeCommandInfo info = SkypeCommandProvider.GetCommandByName(commandName);
                 if (info != null)
                 {
-                    return info.Description;
+                    return string.Format("{0}: {1}", info.Name, info.Description);
                 }
             }
             else
