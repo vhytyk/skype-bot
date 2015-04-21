@@ -22,6 +22,14 @@ namespace SkypeBot.BotEngine
 
         public static IList<SkypeCommandInfo> AllCommandsMetaData = new []
         {
+             new SkypeCommandInfo
+            {
+                Name = "Help",
+                Command = "help",
+                ShortCommand = "h",
+                CommandClassType = typeof (RallyLinkSkypeCommand),
+                Description = "Provides list of commands or help for particular one. Usages: bot#[help|h] [command]####"
+            },
             new SkypeCommandInfo
             {
                 Name = "Rally Link",
