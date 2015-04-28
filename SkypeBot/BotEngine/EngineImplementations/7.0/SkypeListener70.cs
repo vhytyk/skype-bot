@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Threading;
 using SkypeBot.SkypeDB;
 
@@ -14,6 +15,7 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
         public event SkypeMessageHandler SkypeMessageReceived;
         public event FoundContactHandler FoundNewContact;
         private List<string> acceptedList = new List<string>();
+        private SkypeConversation [] allConversations = null;
 
         private void OnSkypeMessageReceived(string source, SkypeMessage message)
         {
@@ -37,7 +39,8 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
             {
                 using (var skypeDal = UnityConfiguration.Instance.Reslove<ISkypeDal>())
                 {
-                    skypeDal.GetAllConversations().ForEach(conversation =>
+                    allConversations = skypeDal.GetAllConversations().ToArray();
+                    allConversations.ToList().ForEach(conversation =>
                     {
                         long lastMessageId = _lastMessageIds.ContainsKey(conversation.Name)
                             ? _lastMessageIds[conversation.Name]
@@ -85,6 +88,15 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
             {
                 _readTimer.Dispose();
                 _readTimer = null;
+            }
+        }
+
+
+        public List<SkypeConversation> GetAllConversations()
+        {
+            lock (_locker)
+            {
+                return allConversations.ToList();
             }
         }
     }

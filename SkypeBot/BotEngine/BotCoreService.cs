@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading;
 using SkypeBot.SkypeDB;
 
@@ -47,9 +48,41 @@ namespace SkypeBot.BotEngine
             });
         }
 
+        string HandleRmqMessageText(string message)
+        {
+            try
+            {
+                List<SkypeConversation> allConversations = _skypeListener.GetAllConversations();
+                MatchCollection matches = Regex.Matches(message, @"\[([\w\.]+)\]");
+                foreach (Match match in matches)
+                {
+                    string contact = match.Groups[1].Value;
+                    SkypeConversation conversation = allConversations.Find(c => c.Name == contact);
+                    if (conversation != null)
+                    {
+                        message = message.Replace(match.Value, conversation.DisplayName);
+                    }
+                    else
+                    {
+                        message = message.Replace(match.Value, contact);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.LogError(ex.ToString());
+            }
+            
+            return message;
+        }
+
         void _rmqListener_SkypeMessageReceived(string source, SkypeMessage message)
         {
-            SendMessage(source, message.Message);
+            List<SkypeConversation> allConversations = _skypeListener.GetAllConversations();
+            if(allConversations.Exists(c => c.DisplayName == source || c.Name == source))
+            {
+                SendMessage(source, HandleRmqMessageText(message.Message));
+            }
         }
 
         private void ProcessQueue(object state)

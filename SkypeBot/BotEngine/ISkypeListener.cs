@@ -1,4 +1,5 @@
-﻿using SkypeBot.SkypeDB;
+﻿using System.Collections.Generic;
+using SkypeBot.SkypeDB;
 
 namespace SkypeBot.BotEngine
 {
@@ -8,6 +9,7 @@ namespace SkypeBot.BotEngine
     {
         event SkypeMessageHandler SkypeMessageReceived;
         event FoundContactHandler FoundNewContact;
+        List<SkypeConversation> GetAllConversations();
         void Initialize();
     }
 }

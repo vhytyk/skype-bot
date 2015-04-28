@@ -55,6 +55,21 @@ namespace SkypeBotWebApi.Controllers
         }
 
         [HttpGet]
+        public IHttpActionResult BranchLock(string locker, string branch, string command)
+        {
+            string skypeName = GetSkypeNameByCruName(locker) ?? locker;
+            var rmqService = new RmqSkypeService();
+
+            rmqService.PushMessage(new RmqSkypeMessage
+            {
+                Conversation = "Merge masters test chat",
+                Message = string.Format("[{0}] {1} {2}", skypeName, command, branch)
+            });
+
+            return Ok();
+        }
+
+        [HttpGet]
         public IHttpActionResult BuildEvent(string to, string job, string eventName, string revision=null, string node=null)
         {
             var rmqService = new RmqSkypeService();
