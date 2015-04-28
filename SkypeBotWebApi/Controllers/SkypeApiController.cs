@@ -70,6 +70,12 @@ namespace SkypeBotWebApi.Controllers
         }
 
         [HttpGet]
+        public IHttpActionResult ReviewCommented(string reviewer, string cruid)
+        {
+            return SendCodeReviewMessage(reviewer, cruid, "Your review has been commented");
+        }
+
+        [HttpGet]
         public IHttpActionResult BuildEvent(string to, string job, string eventName, string revision=null, string node=null)
         {
             var rmqService = new RmqSkypeService();
