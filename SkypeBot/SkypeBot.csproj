@@ -110,6 +110,7 @@
   <ItemGroup>
     <Compile Include="BotEngine\AutomationExtensions.cs" />
     <Compile Include="BotEngine\BotCoreService.cs" />
+    <Compile Include="BotEngine\Commands\ExternalId.cs" />
     <Compile Include="BotEngine\Commands\HelpCommand.cs" />
     <Compile Include="BotEngine\Commands\RallyLinkSkypeCommand.cs" />
     <Compile Include="BotEngine\Commands\ReleaseVersionSkypeCommand.cs" />

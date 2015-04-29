@@ -53,6 +53,14 @@ namespace SkypeBot.BotEngine
                 ShortCommand = "ws",
                 CommandClassType = typeof (WikiSkypeCommand),
                 Description = "Searches the wiki pages by phrase and returns first three results.\rUsage: bot#[wikisearch|ws] [phrase]"
+            },
+            new SkypeCommandInfo
+            {
+                Name = "External ID info",
+                Command = "extid",
+                ShortCommand = "ei",
+                CommandClassType = typeof (ExternalId),
+                Description = "Searches for the internal id by external one and vise-a-versa.\rUsage: bot#[extid|ed] [internalId|externalId]"
             }
         };
 
