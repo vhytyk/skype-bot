@@ -70,9 +70,9 @@ namespace SkypeBotWebApi.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult ReviewCommented(string reviewer, string cruid)
+        public IHttpActionResult ReviewCommented(string reviewer, string cruid, string by)
         {
-            return SendCodeReviewMessage(reviewer, cruid, "Your review has been commented");
+            return SendCodeReviewMessage(reviewer, cruid, string.Format("Your review has been commented by {0}", by));
         }
 
         [HttpGet]
