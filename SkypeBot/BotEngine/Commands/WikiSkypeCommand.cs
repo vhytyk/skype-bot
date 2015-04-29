@@ -2,26 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BitlyDotNET.Implementations;
+using BitlyDotNET.Interfaces;
 using SkypeBot.Wiki;
 namespace SkypeBot.BotEngine.Commands
 {
     public class WikiSkypeCommand : ISkypeCommand
     {
         private string _searchPhrase;
+        private static string wikiToken = null;
         public string RunCommand()
         {
+            IBitlyService bitlyService = new BitlyService("vhytyk", "R_5d31d4dc7a364cf6af291c7533655e55");
+
             string result = null;
             if (!string.IsNullOrEmpty(_searchPhrase))
             {
-                var service = new ConfluenceSoapServiceService();
+                var wikiService = new ConfluenceSoapServiceService();
+                if (null == wikiToken)
+                {
+                    wikiToken = wikiService.login("vhytyk", "Trylystnyk_2015");
+                    
+                }
 
-                var token = service.login("vhytyk", "Trylystnyk_2015");
-                result = string.Join("\r",
-                    service.search(token, _searchPhrase, 20)
-                        .Where(r => r.type == "page")
-                        .Take(3)
-                        .ToList()
-                        .Select(r => string.Format("{0} ({1})", r.url, r.title)));
+                var resultList = new List<string>();
+                var searchList = wikiService.search(wikiToken, _searchPhrase, 20)
+                    .Where(r => r.type == "page")
+                    .Take(3)
+                    .ToList();
+                
+                searchList.ForEach(s =>
+                {
+                    resultList.Add(string.Format("{1} ({0})",
+                        bitlyService.Shorten(s.url.Replace("wiki/", "wiki.justanswer.local/")), s.title));
+                });
+
+
+
+                result = string.Join("\r", resultList);
             }
 
             return result;
