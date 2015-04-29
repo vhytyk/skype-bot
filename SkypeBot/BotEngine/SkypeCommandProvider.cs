@@ -60,7 +60,7 @@ namespace SkypeBot.BotEngine
                 Command = "extid",
                 ShortCommand = "ei",
                 CommandClassType = typeof (ExternalId),
-                Description = "Searches for the internal id by external one and vise-a-versa.\rUsage: bot#[extid|ed] [internalId|externalId]"
+                Description = "Searches for the internal id by external one and vice-a-versa.\rUsage: bot#[extid|ed] [internalId|externalId]"
             }
         };
 
