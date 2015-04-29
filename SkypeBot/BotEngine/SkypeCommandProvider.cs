@@ -28,7 +28,7 @@ namespace SkypeBot.BotEngine
                 Command = "help",
                 ShortCommand = "h",
                 CommandClassType = typeof (HelpCommand),
-                Description = "Provides list of commands or help for particular one. Usages: bot#[help|h] [command]"
+                Description = "Provides list of commands or help for particular one.\rUsage: bot#[help|h] [command]"
             },
             new SkypeCommandInfo
             {
@@ -36,7 +36,7 @@ namespace SkypeBot.BotEngine
                 Command = "rallylink",
                 ShortCommand = "rl",
                 CommandClassType = typeof (RallyLinkSkypeCommand),
-                Description = "Get rally weblink by id. Usage: bot#[rallylink|rl] [JA|DE]####"
+                Description = "Get rally weblink by id.\rUsage: bot#[rallylink|rl] [JA|DE]####"
             },
             new SkypeCommandInfo
             {
@@ -44,7 +44,15 @@ namespace SkypeBot.BotEngine
                 Command = "relver",
                 ShortCommand = "rv",
                 CommandClassType = typeof (ReleaseVersionSkypeCommand),
-                Description = "Returns current release number. Usage: bot#[relver|rv]"
+                Description = "Returns current release number.\rUsage: bot#[relver|rv]"
+            },
+            new SkypeCommandInfo
+            {
+                Name = "Wiki Search",
+                Command = "wikisearch",
+                ShortCommand = "ws",
+                CommandClassType = typeof (WikiSkypeCommand),
+                Description = "Searches the wiki pages by phrase and returns first three results.\rUsage: bot#[wikisearch|ws] [phrase]"
             }
         };
 

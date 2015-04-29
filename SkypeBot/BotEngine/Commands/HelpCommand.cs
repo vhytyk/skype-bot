@@ -22,7 +22,7 @@ namespace SkypeBot.BotEngine.Commands
             else
             {
                 string commands = string.Join(", ", SkypeCommandProvider.AllCommandsMetaData.Select(s => s.Command));
-                return string.Format("Commands: {0}", commands);
+                return string.Format("Commands: {0}\rTo get detailed info about any of command type bot#help [command name]", commands);
             }
             return null;
         }

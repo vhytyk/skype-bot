@@ -65,7 +65,14 @@ namespace SkypeBot.InputDevices
             foreach (char c in keysToType)
             {
                 short key = VkKeyScan(c);
-                if (c.Equals('\r')) continue;
+                if (c.Equals('\r'))
+                {
+                    SendKeyDown((short) KeyboardInput.SpecialKeys.CONTROL, false);
+                    SendKeyDown((short)KeyboardInput.SpecialKeys.RETURN, false);
+                    SendKeyUp((short)KeyboardInput.SpecialKeys.RETURN, false);
+                    SendKeyUp((short)KeyboardInput.SpecialKeys.CONTROL, false);
+                    continue;
+                }
 
                 if (ShiftKeyIsNeeded(key)) SendKeyDown((short)KeyboardInput.SpecialKeys.SHIFT, false);
                 if (CtrlKeyIsNeeded(key)) SendKeyDown((short)KeyboardInput.SpecialKeys.CONTROL, false);
