@@ -62,8 +62,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BitlyDotNET">
-      <HintPath>..\..\..\..\Downloads\BitlyDotNET.dll</HintPath>
+    <Reference Include="BitlyDotNET, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BitlyDotNET.dll</HintPath>
     </Reference>
     <Reference Include="ChatterBotAPI">
       <HintPath>..\ChatterBotAPI.dll</HintPath>
