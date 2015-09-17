@@ -67,7 +67,7 @@ namespace SkypeBot.BotEngine
                 Name = "Bank rates",
                 Command = "kurs",
                 ShortCommand = "kurs",
-                CommandClassType = typeof (ExternalId),
+                CommandClassType = typeof (KursCommand),
                 Description = "Shows bank rates UAH/USD. \rUsage: bot#kurs"
             }
         };
