@@ -30,7 +30,7 @@ namespace SkypeBot.BotEngine.Commands
             double diff1Num = double.Parse(kurs1[1].Trim());
             double kurs2Num = double.Parse(kurs2[0].Trim());
             double diff2Num = double.Parse(kurs2[1].Trim());
-            return string.Format("banks: {0}({1}) - {2}({3})", kurs1Num, diff1Num, kurs2Num, diff2Num);
+            return string.Format("Banks rates for UAH/USD: {0}({1}), {2}({3})", kurs1Num, diff1Num, kurs2Num, diff2Num);
         }
 
         public void Init(string arguments)

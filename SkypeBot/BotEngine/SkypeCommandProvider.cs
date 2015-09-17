@@ -46,14 +46,14 @@ namespace SkypeBot.BotEngine
                 CommandClassType = typeof (ReleaseVersionSkypeCommand),
                 Description = "Returns current release number.\rUsage: bot#[relver|rv]"
             },
-            new SkypeCommandInfo
-            {
-                Name = "Wiki Search",
-                Command = "wikisearch",
-                ShortCommand = "ws",
-                CommandClassType = typeof (WikiSkypeCommand),
-                Description = "Searches the wiki pages by phrase and returns first three results.\rUsage: bot#[wikisearch|ws] [phrase]"
-            },
+            //new SkypeCommandInfo
+            //{
+            //    Name = "Wiki Search",
+            //    Command = "wikisearch",
+            //    ShortCommand = "ws",
+            //    CommandClassType = typeof (WikiSkypeCommand),
+            //    Description = "Searches the wiki pages by phrase and returns first three results.\rUsage: bot#[wikisearch|ws] [phrase]"
+            //},
             new SkypeCommandInfo
             {
                 Name = "External ID info",

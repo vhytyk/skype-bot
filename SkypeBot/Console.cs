@@ -27,6 +27,7 @@ namespace SkypeBot
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            MessageBox.Show(new KursCommand().RunCommand());
             Debug.Listeners.Add(new ConsoleListener(message =>
             {
                 Invoke(new MethodInvoker(() =>
