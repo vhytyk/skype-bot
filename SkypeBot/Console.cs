@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SkypeBot.BotEngine;
+using SkypeBot.BotEngine.Commands;
 using SkypeBot.BotEngine.EngineImplementations._7._0;
 using SkypeBot.SkypeDB.SkypeDalImplementations;
 using SkypeBotRMQ;
@@ -69,5 +70,7 @@ namespace SkypeBot
             Debug.WriteLine(source);
             Debug.WriteLine(message);
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e) { }
     }
 }
