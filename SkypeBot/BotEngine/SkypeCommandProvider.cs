@@ -61,6 +61,14 @@ namespace SkypeBot.BotEngine
                 ShortCommand = "eid",
                 CommandClassType = typeof (ExternalId),
                 Description = "Searches for the internal id by external one and vice-a-versa.\rUsage: bot#[extid|eid] [internalId|externalId]"
+            },
+             new SkypeCommandInfo
+            {
+                Name = "Bank rates",
+                Command = "kurs",
+                ShortCommand = "kurs",
+                CommandClassType = typeof (ExternalId),
+                Description = "Shows bank rates UAH/USD. \rUsage: bot#kurs"
             }
         };
 

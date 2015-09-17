@@ -21,7 +21,7 @@ namespace SkypeBot.BotEngine.Commands
                 var wikiService = new ConfluenceSoapServiceService();
                 if (null == wikiToken)
                 {
-                    wikiToken = wikiService.login("qabuild", "JH298ru");
+                    wikiToken = wikiService.login("vhytyk", "Trylystnyk_2015");
                     
                 }
 
