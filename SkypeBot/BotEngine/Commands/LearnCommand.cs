@@ -42,15 +42,14 @@ namespace SkypeBot.BotEngine.Commands
 
         public void Init(string arguments)
         {
-            _arguments = arguments;
+            _arguments = arguments.Replace("&apos;", "'");
             if (string.IsNullOrEmpty(arguments))
             {
                 argumentsError = true;
             }
             else
             {
-                arguments = arguments.Replace("&apos;", "'");
-                Match argumentsMatch = Regex.Match(arguments,@"\'([\w\s\,\.\d\:\?\!\;]+)\'\s+\'([\w\s\,\.\d\:\?\!\;]+)\'");
+                Match argumentsMatch = Regex.Match(_arguments, @"\'([\w\s\,\.\d\:\?\!\;]+)\'\s+\'([\w\s\,\.\d\:\?\!\;]+)\'");
                 if (argumentsMatch.Success)
                 {
                     stringToListen = argumentsMatch.Groups[1].Value;
