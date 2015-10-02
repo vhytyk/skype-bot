@@ -61,6 +61,14 @@ namespace SkypeBot.BotEngine
                 ShortCommand = "kurs",
                 CommandClassType = typeof (KursCommand),
                 Description = "Shows bank rates UAH/USD. \rUsage: bot#kurs"
+            },
+             new SkypeCommandInfo
+            {
+                Name = "Learn",
+                Command = "learn",
+                ShortCommand = "learn",
+                CommandClassType = typeof (LearnCommand),
+                Description = "Can learn any phrase/response pair. Usage: bot#learn \"<phrase>\" \"<response>\""
             }
         };
 
