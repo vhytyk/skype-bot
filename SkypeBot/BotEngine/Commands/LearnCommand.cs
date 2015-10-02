@@ -13,6 +13,7 @@ namespace SkypeBot.BotEngine.Commands
     public class LearnCommand : ISkypeCommand
     {
         private bool argumentsError = false;
+        private string _arguments = "";
         private string stringToListen = string.Empty;
         private string stringToResponse = string.Empty;
         public string RunCommand()
@@ -20,7 +21,7 @@ namespace SkypeBot.BotEngine.Commands
             if (argumentsError)
             {
                 return
-                    @"Command has invalid arguments. Please, follow help guide (bot#learn ""<string_to_listen>"" ""<string_to_response>"")";
+                    string.Format(@"Command has invalid arguments ({0}). Please, follow help guide (bot#learn ""<string_to_listen>"" ""<string_to_response>"")",_arguments);
             }
             if (SaveToDb("autoRule", stringToListen, stringToResponse))
             {
@@ -41,6 +42,7 @@ namespace SkypeBot.BotEngine.Commands
 
         public void Init(string arguments)
         {
+            _arguments = arguments;
             if (string.IsNullOrEmpty(arguments))
             {
                 argumentsError = true;
