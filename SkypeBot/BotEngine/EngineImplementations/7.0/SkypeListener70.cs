@@ -47,7 +47,7 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                             : -1;
                         skypeDal.GetLastMessages(lastMessageId, conversation.Id).ForEach(message =>
                         {
-                            if (raiseEvents && message.Author != ConfigurationManager.AppSettings["botSkypeName"])
+                            if (raiseEvents && message.Author != "[skype-bot]")
                             {
                                 OnSkypeMessageReceived(conversation.DisplayName, message);
                             }
