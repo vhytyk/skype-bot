@@ -21,7 +21,7 @@ namespace SkypeBot.BotEngine.Commands
             if (argumentsError)
             {
                 return
-                    string.Format(@"Command has invalid arguments ({0}). Please, follow help guide (bot#learn '<string_to_listen>' '<string_to_response>')",_arguments);
+                    string.Format(@"Command has invalid arguments ({0}). Please, follow help guide (bot#learn (<string_to_listen>) (<string_to_response>))",_arguments);
             }
             if (SaveToDb(new Guid().ToString(), stringToListen, stringToResponse))
             {
@@ -50,7 +50,7 @@ namespace SkypeBot.BotEngine.Commands
             }
             else
             {
-                Match argumentsMatch = Regex.Match(_arguments, @"\'([\w\s\,\.\d\:\?\!\;]+)\'\s+\'([\w\s\,\.\d\:\?\!\;]+)\'");
+                Match argumentsMatch = Regex.Match(_arguments, @"\(([\w\s\,\.\d\:\?\!\;]+)\)\s+\(([\w\s\,\.\d\:\?\!\;]+)\)");
                 if (argumentsMatch.Success)
                 {
                     stringToListen = argumentsMatch.Groups[1].Value;

@@ -68,7 +68,7 @@ namespace SkypeBot.BotEngine
                 Command = "learn",
                 ShortCommand = "learn",
                 CommandClassType = typeof (LearnCommand),
-                Description = "Can learn any phrase/response pair. Usage: bot#learn '<phrase>' '<response>'"
+                Description = "Can learn any phrase/response pair. Usage: bot#learn (<phrase>) (<response>)"
             }
         };
 
