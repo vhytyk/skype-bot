@@ -23,7 +23,7 @@ namespace SkypeBot.BotEngine.Commands
                 return
                     string.Format(@"Command has invalid arguments ({0}). Please, follow help guide (bot#learn '<string_to_listen>' '<string_to_response>')",_arguments);
             }
-            if (SaveToDb("autoRule", stringToListen, stringToResponse))
+            if (SaveToDb(new Guid().ToString(), stringToListen, stringToResponse))
             {
                 return string.Format(@"'{0}' was successfully learned", stringToListen);
             }
