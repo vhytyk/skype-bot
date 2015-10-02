@@ -27,7 +27,8 @@ namespace SkypeBot.BotEngine.Commands
             {
                 return string.Format(@"'{0}' was successfully learned", stringToListen);
             }
-            return "";
+            else
+            return string.Format(@"'{0}' wasn't learned for some reason", stringToListen);
         }
 
         bool SaveToDb(string name, string listen, string response)
