@@ -29,7 +29,7 @@
         $('#rules').html('');
         $.getJSON('/api/rules', function (rulesJsonPayload) {
             $(rulesJsonPayload).each(function (i, item) {
-                $('#rules').append('<li>' + item.Name + '&nbsp;<button class="deleteRule" data-id="' + item.Id + '">Delete</button></li>');
+                $('#rules').append('<li>' + item.Name + ',&nbsp; <b>Regex:</b> '+item.Rule+',&nbsp; <b>Response:</b> '+item.Value+'<button class="deleteRule" data-id="' + item.Id + '">Delete</button></li>');
             });
 
             $(".deleteRule").click(function () {
