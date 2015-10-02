@@ -49,6 +49,7 @@ namespace SkypeBot.BotEngine.Commands
             }
             else
             {
+                arguments = arguments.Replace("&apos;", "'");
                 Match argumentsMatch = Regex.Match(arguments,@"\'([\w\s\,\.\d\:\?\!\;]+)\'\s+\'([\w\s\,\.\d\:\?\!\;]+)\'");
                 if (argumentsMatch.Success)
                 {
