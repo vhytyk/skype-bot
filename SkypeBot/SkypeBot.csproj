@@ -115,9 +115,11 @@
     <Compile Include="BotEngine\BotCoreService.cs" />
     <Compile Include="BotEngine\Commands\ExternalId.cs" />
     <Compile Include="BotEngine\Commands\HelpCommand.cs" />
+    <Compile Include="BotEngine\Commands\LearnCommand.cs" />
     <Compile Include="BotEngine\Commands\KursCommand.cs" />
     <Compile Include="BotEngine\Commands\RallyLinkSkypeCommand.cs" />
     <Compile Include="BotEngine\Commands\ReleaseVersionSkypeCommand.cs" />
+    <Compile Include="BotEngine\Commands\UnknownCommand.cs" />
     <Compile Include="BotEngine\Commands\WikiSkypeCommand.cs" />
     <Compile Include="BotEngine\EngineImplementations\7.0\SkypeInitService70.cs" />
     <Compile Include="BotEngine\EngineImplementations\7.0\SkypeListener70.cs" />

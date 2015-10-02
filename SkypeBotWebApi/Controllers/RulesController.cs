@@ -35,7 +35,7 @@ namespace SkypeBotWebApi.Controllers
             return _ruleService.AddRule(newRule);
         }
 
-        [HttpDelete]
+        [HttpGet]
         public bool Delete(int id)
         {
             return _ruleService.DeleteRule(id);
