@@ -29,8 +29,10 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                     _initService.GetMainWindow()
                         .FindFirst(TreeScope.Descendants,
                             new PropertyCondition(AutomationElement.ClassNameProperty, "TChatEntryControl")).GetClickablePoint();
+                point.Y += 20;
                 
                 Mouse.Instance.Click(point);
+                //Thread.Sleep(500);
                 SelectAllAndRemove();
                 Keyboard.Instance.Send(message);
                 Keyboard.Instance.PressSpecialKey(KeyboardInput.SpecialKeys.RETURN);
