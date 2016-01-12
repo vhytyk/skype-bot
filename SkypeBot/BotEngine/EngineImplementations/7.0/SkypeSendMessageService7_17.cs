@@ -25,14 +25,7 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
 
                 Mouse.Instance.Click(_initService.GetMainWindow().GetElementByName("Contacts")
                     .FindFirst(TreeScope.Children, Condition.TrueCondition).GetClickablePoint());
-                Point point =
-                    _initService.GetMainWindow()
-                        .FindFirst(TreeScope.Descendants,
-                            new PropertyCondition(AutomationElement.ClassNameProperty, "TChatEntryControl")).GetClickablePoint();
-                point.Y += 20;
-                
-                Mouse.Instance.Click(point);
-                //Thread.Sleep(500);
+                Keyboard.Instance.PressSpecialKey(KeyboardInput.SpecialKeys.RETURN);
                 SelectAllAndRemove();
                 Keyboard.Instance.Send(message);
                 Keyboard.Instance.PressSpecialKey(KeyboardInput.SpecialKeys.RETURN);

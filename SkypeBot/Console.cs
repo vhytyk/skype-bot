@@ -77,6 +77,7 @@ namespace SkypeBot
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             new SkypeSendMessageService7_17(new SkypeInitService70()).SendMessage("victor.hytyk.prl","test");
+            //new WindowTree(UnityConfiguration.Instance.Reslove<ISkypeInitService>().GetMainWindow()).ShowDialog();
         }
     }
 }
