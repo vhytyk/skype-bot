@@ -35,7 +35,7 @@ namespace SkypeBot
         {
             _container.RegisterType<IBotCoreService, BotCoreService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISkypeInitService, SkypeInitService70>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<ISkypeSendMessageService, SkypeSendMessageService70>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<ISkypeSendMessageService, SkypeSendMessageService7_17>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ISkypeListener, SkypeListener70>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IRmqListener, RmqListener>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IHandleMessageService, HandleMessageService>(new ContainerControlledLifetimeManager());

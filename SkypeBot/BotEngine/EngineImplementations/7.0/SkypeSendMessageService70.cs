@@ -10,14 +10,14 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
 {
     public class SkypeSendMessageService70: SkypeBaseService, ISkypeSendMessageService
     {
-        private readonly ISkypeInitService _initService;
+        protected readonly ISkypeInitService _initService;
 
         public SkypeSendMessageService70(ISkypeInitService initService)
         {
             _initService = initService;
         }
 
-        public void SendMessage(string contact, string message)
+        public virtual void SendMessage(string contact, string message)
         {
             _initService.Initialize(() =>
             {
