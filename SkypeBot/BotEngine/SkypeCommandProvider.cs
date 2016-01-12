@@ -75,7 +75,7 @@ namespace SkypeBot.BotEngine
                 Name = "GoToMeeting",
                 Command = "gotomeeting",
                 ShortCommand = "g2m",
-                CommandClassType = typeof (LearnCommand),
+                CommandClassType = typeof (GotomeetingCommand),
                 Description = "Creates a session in GoToMeeting Free and post a link"
             }
         };
