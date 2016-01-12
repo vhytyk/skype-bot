@@ -69,6 +69,14 @@ namespace SkypeBot.BotEngine
                 ShortCommand = "learn",
                 CommandClassType = typeof (LearnCommand),
                 Description = "Can learn any phrase/response pair. Usage: bot#learn (<phrase>) (<response>)"
+            },
+             new SkypeCommandInfo
+            {
+                Name = "GoToMeeting",
+                Command = "gotomeeting",
+                ShortCommand = "g2m",
+                CommandClassType = typeof (LearnCommand),
+                Description = "Creates a session in GoToMeeting Free and post a link"
             }
         };
 

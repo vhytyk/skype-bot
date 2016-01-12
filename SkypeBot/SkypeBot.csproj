@@ -114,6 +114,7 @@
     <Compile Include="BotEngine\AutomationExtensions.cs" />
     <Compile Include="BotEngine\BotCoreService.cs" />
     <Compile Include="BotEngine\Commands\ExternalId.cs" />
+    <Compile Include="BotEngine\Commands\GotomeetingCommand.cs" />
     <Compile Include="BotEngine\Commands\HelpCommand.cs" />
     <Compile Include="BotEngine\Commands\LearnCommand.cs" />
     <Compile Include="BotEngine\Commands\KursCommand.cs" />
