@@ -117,15 +117,23 @@ namespace SkypeBotWebApi.Controllers
         [HttpPost]
         public IHttpActionResult Jenkins(JenkinsNotification jData)
         {
+            if (jData.Build.Phase == "FINALIZED")
+            {
+                return Ok();
+            }
             var rmqService = new RmqSkypeService();
             UniversalDal<JenkinsSubscription> dal = new UniversalDal<JenkinsSubscription>();
             dal.GetAll().Where(item => item.JenkisJobName == jData.Name && item.Active).ToList().ForEach(subscription =>
             {
+                string smile = !string.IsNullOrEmpty(jData.Build.Status)
+                    ? ((jData.Build.Status == "SUCCESS") ? "(sun)" : "(rain)")
+                    : "(*)";
                 rmqService.PushMessage(new RmqSkypeMessage()
                 {
                     Conversation = subscription.ConversationName,
                     Message =
-                        string.Format("(*) Build for {0} - {1}{2}",
+                        string.Format("{0} Build for {1} - {2}{3}",
+                            smile,
                             jData.Name,
                             jData.Build.Phase,
                             string.IsNullOrEmpty(jData.Build.Status) ? "" : ", status: *" + jData.Build.Status + "*")
