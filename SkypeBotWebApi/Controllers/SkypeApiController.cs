@@ -124,7 +124,7 @@ namespace SkypeBotWebApi.Controllers
                 rmqService.PushMessage(new RmqSkypeMessage()
                 {
                     Conversation = subscription.ConversationName,
-                    Message = string.Format("(*) Build for {0} - *{1}*", jData.Name, jData.Build.Phase)
+                    Message = string.Format("(*) Build for {0} - *{1} {2}*", jData.Name, jData.Build.Phase, jData.Build.Status)
                 });
             });
             return Ok();
