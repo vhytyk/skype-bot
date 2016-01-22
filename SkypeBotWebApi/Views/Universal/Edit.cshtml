@@ -1,0 +1,46 @@
+﻿@using SkypeBotWebApi.Models
+@using SQLite
+@model object
+
+@using (Html.BeginForm("EditItem", ViewContext.RouteData.Values["controller"].ToString()))
+{
+    var universalModel = new UniversalViewModel(Model.GetType());
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+        </tr>
+        @foreach (var property in universalModel.AllProperties)
+        {
+            bool isPrimaryKey = property.Attributes.Contains(new PrimaryKeyAttribute());
+            <tr>
+                <td>@(string.IsNullOrEmpty(property.Description) ? property.Name : property.Description)</td>
+                @if (@property.PropertyType == typeof(string) || @property.PropertyType == typeof(int))
+                {
+                    <td>
+                        @if (isPrimaryKey)
+                        {
+                            @Html.TextBox(property.Name, property.GetValue(Model), new {@readonly = "readonly"})
+                        }
+                        else
+                        {
+                            @Html.TextBox(property.Name, property.GetValue(Model))
+                        }
+
+                    </td>
+                }
+                else if (@property.PropertyType == typeof(bool))
+                {
+                    <td>
+                        @{
+                            var value = property.GetValue(Model);
+                        }
+                        @Html.CheckBox(property.Name, value != null && (bool) value)</td>
+                }
+            </tr>
+        }
+
+    </table>
+    <input type="submit" value="Update">
+}
+

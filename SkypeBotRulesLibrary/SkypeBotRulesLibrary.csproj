@@ -45,11 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\JenkinsSubscription.cs" />
     <Compile Include="Entities\SkypeNameInfo.cs" />
     <Compile Include="Fakes\FakeRuleDal.cs" />
     <Compile Include="Implementations\BaseDal.cs" />
     <Compile Include="Implementations\SkypeNameDal.cs" />
     <Compile Include="Implementations\SkypeNameService.cs" />
+    <Compile Include="Implementations\UniversalDal.cs" />
+    <Compile Include="Interfaces\IUniversalDal.cs" />
     <Compile Include="Interfaces\IRuleDal.cs" />
     <Compile Include="Interfaces\IRuleService.cs" />
     <Compile Include="Interfaces\ISkypeNameDal.cs" />

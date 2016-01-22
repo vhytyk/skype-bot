@@ -1,0 +1,34 @@
+﻿@using System.ComponentModel
+@model SkypeBotWebApi.Models.UniversalViewModel
+
+<H2>
+    Jenkins subscriptions
+</H2>
+<table border="1">
+    <tr>
+        @foreach (var property in Model.AllProperties)
+        {
+            <th>@(string.IsNullOrEmpty(property.Description) ? property.Name : property.Description)</th>
+        }
+    </tr>
+
+    @foreach (var item in Model.All)
+    {
+        <tr>
+            @foreach (var property in Model.AllProperties)
+            {
+                <td>@property.GetValue(item)</td>
+               
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", ViewContext.RouteData.Values["controller"].ToString(), new { Id = @Model.GetIdValue(item) }, null)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", ViewContext.RouteData.Values["controller"].ToString(), new { Id = @Model.GetIdValue(item) }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+<br/>
+@Html.ActionLink("Add new","AddNew")

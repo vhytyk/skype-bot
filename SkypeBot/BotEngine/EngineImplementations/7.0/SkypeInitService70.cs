@@ -105,9 +105,7 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
             {
                 return _cachedMainWindow;
             }
-            var andcondition = new AndCondition(new PropertyCondition(AutomationElement.ProcessIdProperty, _application.Process.Id),
-                new PropertyCondition(AutomationElement.ClassNameProperty, "tSkMainForm"));
-            _cachedMainWindow = AutomationElement.RootElement.FindFirst(TreeScope.Descendants, andcondition);
+            _cachedMainWindow = AutomationElement.RootElement.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.ProcessIdProperty, _application.Process.Id));
             return _cachedMainWindow;
         }
     }

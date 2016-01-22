@@ -2,12 +2,20 @@
 using SkypeBotRMQ;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Web.Http;
+using Newtonsoft.Json;
+using SkypeBotRulesLibrary.Entities;
 using SkypeBotRulesLibrary.Implementations;
 using SkypeBotRulesLibrary.Interfaces;
+using SkypeBotWebApi.Models;
 
 namespace SkypeBotWebApi.Controllers
 {
@@ -105,5 +113,32 @@ namespace SkypeBotWebApi.Controllers
             rmqService.PushMessage(jsonData);
             return Ok();
         }
+
+        [HttpPost]
+        public IHttpActionResult Jenkins(JenkinsNotification jData)
+        {
+            var rmqService = new RmqSkypeService();
+            UniversalDal<JenkinsSubscription> dal = new UniversalDal<JenkinsSubscription>();
+            dal.GetAll().Where(item => item.JenkisJobName == jData.Name && item.Active).ToList().ForEach(subscription =>
+            {
+                rmqService.PushMessage(new RmqSkypeMessage()
+                {
+                    Conversation = subscription.ConversationName,
+                    Message = string.Format("(*) Build for {0} - *{1}*", jData.Name, jData.Build.Phase)
+                });
+            });
+            return Ok();
+        }
+
+        [HttpGet]
+        public IHttpActionResult Ping(object jsonData)
+        {
+            return new System.Web.Http.Results.FormattedContentResult<string>(HttpStatusCode.OK,
+                "pong",
+                new JsonMediaTypeFormatter(),
+                new MediaTypeHeaderValue("application/json"),
+                this);
+        }
+
     }
 }

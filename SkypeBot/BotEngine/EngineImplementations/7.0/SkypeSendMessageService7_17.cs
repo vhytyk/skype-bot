@@ -22,9 +22,7 @@ namespace SkypeBot.BotEngine.EngineImplementations._7._0
                     new PropertyCondition(AutomationElement.ClassNameProperty, "TSearchControl")).GetClickablePoint());
                 SelectAllAndRemove();
                 Keyboard.Instance.Send(contact);
-
-                Mouse.Instance.Click(_initService.GetMainWindow().GetElementByName("Contacts")
-                    .FindFirst(TreeScope.Children, Condition.TrueCondition).GetClickablePoint());
+                Keyboard.Instance.PressSpecialKey(KeyboardInput.SpecialKeys.RETURN);
                 Keyboard.Instance.PressSpecialKey(KeyboardInput.SpecialKeys.RETURN);
                 SelectAllAndRemove();
                 Keyboard.Instance.Send(message);
