@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Rally.RestApi;
 using Rally.RestApi.Response;
+using System.Configuration;
 
 namespace SkypeBot.BotEngine.Commands
 {
@@ -14,7 +15,7 @@ namespace SkypeBot.BotEngine.Commands
         public static QueryResult RequetQuery(string artifact, Query query)
         {
             var restApi = new RallyRestApi();
-            restApi.Authenticate("victor.hytyk@justanswer.com", "Qwerty123$", "https://rally1.rallydev.com", proxy: null, allowSSO: false);
+            restApi.Authenticate(ConfigurationManager.AppSettings["rallyUser"], ConfigurationManager.AppSettings["rallyPass"], "https://rally1.rallydev.com", proxy: null, allowSSO: false);
 
             Request request = new Request(artifact);
             request.Query = query;
