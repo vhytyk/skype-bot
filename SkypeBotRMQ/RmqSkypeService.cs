@@ -34,7 +34,7 @@ namespace SkypeBotRMQ
 
         public void PushMessage(RmqSkypeMessage skypeMessage)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            var factory = new ConnectionFactory() { HostName = "messaginghost" };
             using (var connection = factory.CreateConnection())
             {
                 using (var channel = connection.CreateModel())
@@ -49,7 +49,7 @@ namespace SkypeBotRMQ
 
         public RmqSkypeMessage PullMessage()
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            var factory = new ConnectionFactory() { HostName = "messaginghost" };
             using (var connection = factory.CreateConnection())
             {
                 using (var channel = connection.CreateModel())
